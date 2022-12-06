@@ -1,0 +1,33 @@
+.navigation__list {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  margin: 28px 0 28px 0;
+  padding: 0;
+}
+
+.navigation__item {
+  margin: 0;
+  padding: 0;
+}
+
+.navigation__link {
+  font-family: "Inter", "Arial", "Helvetica", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  text-decoration: none;
+  text-align: right;
+  color: rgba(0, 0, 0, 1);
+  transition: font-weight 0.5s ease-out;
+}
+
+.navigation__link:hover {
+  font-weight: 500;
+  transition: font-weight 0.5s ease-out;
+}
+
+.navigation__link_indent {
+  margin-right: 16px;
+}
