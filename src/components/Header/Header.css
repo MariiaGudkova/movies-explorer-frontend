@@ -16,6 +16,15 @@
   width: 38px;
   height: 38px;
   margin: 18px 44px 18px 0;
+  cursor: pointer;
+  -webkit-transition: opacity 0.5s ease-in;
+  transition: opacity 0.5s ease-in;
+}
+
+.header__logo:hover {
+  opacity: 0.4;
+  -webkit-transition: opacity 0.5s ease-out;
+  transition: opacity 0.5s ease-out;
 }
 
 .header__button {
@@ -23,11 +32,11 @@
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  border: none;
-  background-color: transparent;
   padding: 0;
-  margin: 21px 0 23px 0;
+  margin: 14px 0 23px 0;
   text-align: center;
+  text-decoration: none;
+  color: #000000;
   cursor: pointer;
 }
 
@@ -38,11 +47,14 @@
   font-size: 14px;
   line-height: 16px;
   margin-right: 13px;
+  text-decoration: none;
+  -webkit-transition: font-weight 0.5s ease-in;
   transition: font-weight 0.5s ease-in;
 }
 
 .header__button-text:hover {
   font-weight: 500;
+  -webkit-transition: font-weight 0.5s ease-out;
   transition: font-weight 0.5s ease-out;
 }
 
@@ -50,10 +62,172 @@
   padding: 9.75px;
   background-color: rgba(249, 249, 249, 1);
   border-radius: 6px;
+  -webkit-transition: opacity 0.5s ease-in;
   transition: opacity 0.5s ease-in;
 }
 
 .header__button-icon:hover {
-  opacity: 0.8;
-  transition: opacity 0.5s ease-in;
+  opacity: 0.4;
+  -webkit-transition: opacity 0.5s ease-out;
+  transition: opacity 0.5s ease-out;
+}
+
+.header__burger {
+  display: none;
+}
+
+.header__burger_active {
+  display: none;
+}
+
+.header__menu {
+  display: none;
+}
+
+.header__cross {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .header {
+    margin: 0 30px 0 30px;
+  }
+
+  .header__button {
+    display: none;
+  }
+
+  .header__button_active {
+    position: absolute;
+    top: 880px;
+    right: 210px;
+    z-index: 4;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0;
+    margin: 14px 0 23px 0;
+    text-align: center;
+    text-decoration: none;
+    color: #000000;
+    cursor: pointer;
+  }
+
+  .header__burger_active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 18px 0 15px 0;
+    padding: 8px;
+    list-style: none;
+    cursor: pointer;
+    -webkit-transition: opacity 0.5s ease-in;
+    transition: opacity 0.5s ease-in;
+  }
+
+  .header__burger_active:hover {
+    opacity: 0.4;
+    -webkit-transition: opacity 0.5s ease-out;
+    transition: opacity 0.5s ease-out;
+  }
+
+  .header__burger-line {
+    padding: 0;
+    margin: 0 0 7px 0;
+    width: 28px;
+    height: 3px;
+    background-color: #000000;
+  }
+
+  .header__menu_active {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    top: 0;
+    right: 0;
+    height: 1024px;
+    width: 100%;
+    max-width: 520px;
+    min-width: 320px;
+    position: fixed;
+    background-color: #ffffff;
+    z-index: 3;
+  }
+
+  .header__cross {
+    position: absolute;
+    top: 19px;
+    right: 27px;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    list-style: none;
+    cursor: pointer;
+    z-index: 4;
+    -webkit-transition: opacity 0.5s ease-in;
+    transition: opacity 0.5s ease-in;
+  }
+
+  .header__cross:hover {
+    opacity: 0.4;
+    -webkit-transition: opacity 0.5s ease-out;
+    transition: opacity 0.5s ease-out;
+  }
+
+  .header__cross-line {
+    padding: 0;
+    margin: 0;
+    width: 22px;
+    height: 3px;
+    background-color: #000000;
+  }
+
+  .header__cross-line:first-of-type {
+    transform: rotate(45deg);
+    margin-top: 2px;
+  }
+
+  .header__cross-line:last-of-type {
+    transform: rotate(-45deg);
+    margin-top: -3px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .header {
+    margin: 0 14px 0 14px;
+  }
+
+  .header-logo {
+    margin-top: 18px;
+  }
+
+  .header__button_active {
+    margin-left: auto;
+    margin-right: auto;
+    top: 680px;
+    left: 50%;
+    right: 50%;
+  }
+
+  .header__burger_active {
+    margin-top: 19px;
+    margin-right: 27px;
+  }
+
+  .header__burger-line {
+    width: 23px;
+    height: 2px;
+  }
+
+  .header__menu_active {
+    height: 780px;
+  }
+
+  .header__cross {
+    top: 10px;
+    right: 32px;
+  }
 }
