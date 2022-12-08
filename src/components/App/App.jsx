@@ -4,6 +4,7 @@ import "./App.css";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { routes } from "../../utils/routes";
 import Header from "../Header/Header.jsx";
+import Promo from "../Promo/Promo.jsx";
 
 function App() {
   const [isLogged, setIsLogged] = React.useState(true);
@@ -13,23 +14,23 @@ function App() {
       <ProtectedRoute exact path={routes.movies} loggedIn={isLogged}>
         <>
           <div className={!open ? "overlay" : "overlay_active"} />
-          <Header isLogin={isLogged} open={open} setOpen={setOpen} />
+          <Header isLogged={isLogged} open={open} setOpen={setOpen} />
         </>
       </ProtectedRoute>
       <ProtectedRoute exact path={routes.savedMovies} loggedIn={isLogged}>
         <>
           <div className={!open ? "overlay" : "overlay_active"} />
-          <Header isLogin={isLogged} open={open} setOpen={setOpen} />
+          <Header isLogged={isLogged} open={open} setOpen={setOpen} />
         </>
       </ProtectedRoute>
       <ProtectedRoute exact path={routes.profile} loggedIn={isLogged}>
         <>
           <div className={!open ? "overlay" : "overlay_active"} />
-          <Header isLogin={isLogged} open={open} setOpen={setOpen} />
+          <Header isLogged={isLogged} open={open} setOpen={setOpen} />
         </>
       </ProtectedRoute>
       <Route exact path={routes.baseRoute}>
-        <Header isLogin={isLogged} open={open} setOpen={setOpen} />
+        <Promo isLogged={isLogged} />
       </Route>
       <Route exact path={routes.signUp}></Route>
       <Route exact path={routes.signIn}></Route>
