@@ -3,7 +3,11 @@
   flex-direction: row;
   justify-content: space-between;
   max-width: 1280px;
-  margin: 0 70px 0 70px;
+  margin: 0 70px 47px 70px;
+}
+
+.header_promo {
+  width: 89%;
 }
 
 .header__container {
@@ -92,9 +96,20 @@
   display: none;
 }
 
+@media screen and (max-width: 1270px) {
+  .header_promo {
+    margin-bottom: 296px;
+  }
+}
+
 @media screen and (max-width: 768px) {
   .header {
     margin: 0 30px 0 30px;
+  }
+
+  .header_promo {
+    margin-bottom: 296px;
+    width: 92%;
   }
 
   .header__button {
@@ -202,6 +217,11 @@
 @media screen and (max-width: 520px) {
   .header {
     margin: 0 14px 0 14px;
+  }
+
+  .header_promo {
+    margin-bottom: 179px;
+    width: 91%;
   }
 
   .header-logo {

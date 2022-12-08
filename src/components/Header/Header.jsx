@@ -53,7 +53,7 @@ function Header(props) {
       </div>
     </header>
   ) : (
-    <header className="header">
+    <header className="header header_promo">
       <Link to={routes.baseRoute}>
         <img className="header__logo" src={headerLogo} alt="Logo" />
       </Link>
