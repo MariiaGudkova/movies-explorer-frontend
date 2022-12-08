@@ -1,23 +1,27 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./Header.css";
 import headerLogo from "../../images/header__logo.svg";
 import headerButtonIcon from "../../images/header__button-icon.svg";
 import Navigation from "../Navigation/Navigation.jsx";
+import NavTab from "../NavTab/NavTab";
 import { routes } from "../../utils/routes";
 
 function Header(props) {
-  const { open, setOpen } = props;
+  const { isLogged, open, setOpen } = props;
   const close = () => setOpen(false);
+  const location = useLocation();
 
   function onClick() {
     return setOpen(!open);
   }
 
-  return (
+  return ({ isLogged } && location.pathname === routes.movies) ||
+    location.pathname === routes.savedMovies ||
+    location.pathname === routes.profile ? (
     <header className="header">
       <div className="header__container">
-        <Link to={routes.baseRoute}>
+        <Link to={routes.movies}>
           <img className="header__logo" src={headerLogo} alt="Logo" />
         </Link>
         <Navigation open={open} />
@@ -47,6 +51,13 @@ function Header(props) {
           <li className="header__cross-line"></li>
         </ul>
       </div>
+    </header>
+  ) : (
+    <header className="header">
+      <Link to={routes.baseRoute}>
+        <img className="header__logo" src={headerLogo} alt="Logo" />
+      </Link>
+      <NavTab />
     </header>
   );
 }

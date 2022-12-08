@@ -3,13 +3,17 @@
   flex-direction: row;
   justify-content: space-between;
   max-width: 1280px;
-  min-width: 320px;
   margin: 0 70px 0 70px;
 }
 
 .header__container {
   display: flex;
   flex-direction: row;
+}
+
+.header__container_promo {
+  display: flex;
+  justify-content: space-between;
 }
 
 .header__logo {
@@ -22,7 +26,7 @@
 }
 
 .header__logo:hover {
-  opacity: 0.4;
+  opacity: 0.6;
   -webkit-transition: opacity 0.5s ease-out;
   transition: opacity 0.5s ease-out;
 }
@@ -67,7 +71,7 @@
 }
 
 .header__button-icon:hover {
-  opacity: 0.4;
+  opacity: 0.6;
   -webkit-transition: opacity 0.5s ease-out;
   transition: opacity 0.5s ease-out;
 }
@@ -128,7 +132,7 @@
   }
 
   .header__burger_active:hover {
-    opacity: 0.4;
+    opacity: 0.6;
     -webkit-transition: opacity 0.5s ease-out;
     transition: opacity 0.5s ease-out;
   }
@@ -171,7 +175,7 @@
   }
 
   .header__cross:hover {
-    opacity: 0.4;
+    opacity: 0.6;
     -webkit-transition: opacity 0.5s ease-out;
     transition: opacity 0.5s ease-out;
   }
