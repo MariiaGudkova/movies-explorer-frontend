@@ -32,13 +32,13 @@
   justify-content: space-between;
 }
 
-.about-project__paragraph {
+.paragraph {
   display: flex;
   flex-direction: column;
   max-width: 550px;
 }
 
-.about-project__subtitle {
+.paragraph__title {
   padding: 0;
   margin: 0 0 26px 0;
   font-family: "Inter", "Arial", "Helvetica", sans-serif;
@@ -50,7 +50,7 @@
   color: #000000;
 }
 
-.about-project__text {
+.paragraph__text {
   padding: 0;
   margin: 0 0 95px 0;
   font-family: "Inter", "Arial", "Helvetica", sans-serif;
@@ -61,14 +61,14 @@
   color: #000000;
 }
 
-.about-project__scale {
+.timescale {
   display: flex;
   flex-direction: row;
   max-width: 1140px;
   width: 100%;
 }
 
-.about-project__scale-segment {
+.timescale__segment {
   padding: 0;
   margin: 0 0 14px 0;
   font-family: "Inter", "Arial", "Helvetica", sans-serif;
@@ -80,22 +80,22 @@
   color: #a0a0a0;
 }
 
-.about-project__scale-segment_short {
+.timescale__segment_short {
   width: 228px;
 }
 
-.about-project__scale-segment_lang {
+.timescale__segment_long {
   flex-grow: 5;
 }
 
-.about-project__segment_back {
+.timescale__description_back {
   padding: 10px 14px 10px 14px;
   background-color: #000000;
   color: #ffffff;
   font-weight: 400;
 }
 
-.about-project__segment_front {
+.timescale__description_front {
   padding: 10px 14px 10px 14px;
   background-color: #f2f2f2;
   color: #000000;
@@ -103,11 +103,11 @@
 }
 
 @media screen and (max-width: 1080px) {
-  .about-project__paragraph {
+  .paragraph {
     max-width: 400px;
   }
 
-  .about-project__paragraph:first-of-type {
+  .paragraph:first-of-type {
     margin-right: 30px;
   }
 }
@@ -117,21 +117,21 @@
     margin: 0 50px 90px 50px;
   }
 
-  .about-project__subtitle {
-    margin-bottom: 22px;
-  }
-
-  .about-project__paragraph {
+  .paragraph {
     max-width: 319px;
   }
 
-  .about-project__text {
+  .paragraph__title {
+    margin-bottom: 22px;
+  }
+
+  .paragraph__text {
     font-size: 12px;
     line-height: 18px;
     margin-bottom: 77px;
   }
 
-  .about-project__scale-segment_short {
+  .timescale__segment_short {
     width: 140px;
   }
 }
@@ -153,36 +153,36 @@
     align-items: center;
   }
 
-  .about-project__paragraph:first-of-type {
+  .paragraph:first-of-type {
     margin-right: 0;
   }
 
-  .about-project__subtitle {
+  .paragraph__title {
     font-size: 18px;
     line-height: 22px;
     margin-bottom: 17px;
   }
 
-  .about-project__text {
+  .paragraph__text {
     font-size: 11px;
     line-height: 16px;
     margin-bottom: 55px;
   }
 
-  .about-project__scale-segment {
+  .timescale__segment {
     font-size: 11px;
     line-height: 13px;
   }
 
-  .about-project__scale-segment_short {
+  .timescale__segment_short {
     width: 100px;
   }
 
-  .about-project__segment_back {
+  .timescale__description_back {
     margin-top: 5px;
   }
 
-  .about-project__segment_front {
+  .timescale__description_front {
     margin-top: 5px;
   }
 }
