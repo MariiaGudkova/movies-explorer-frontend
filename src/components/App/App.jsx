@@ -1,10 +1,11 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import "./App.css";
-import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import { routes } from "../../utils/routes";
 import Header from "../Header/Header.jsx";
 import Promo from "../Promo/Promo.jsx";
+import AboutProject from "../AboutProject/AboutProject.jsx";
 
 function App() {
   const [isLogged, setIsLogged] = React.useState(true);
@@ -31,6 +32,7 @@ function App() {
       </ProtectedRoute>
       <Route exact path={routes.baseRoute}>
         <Promo isLogged={isLogged} />
+        <AboutProject />
       </Route>
       <Route exact path={routes.signUp}></Route>
       <Route exact path={routes.signIn}></Route>
