@@ -1,7 +1,7 @@
 .about-project__container {
   display: flex;
   flex-direction: column;
-  margin: 0 70px 100px 70px;
+  margin: 0 70px 110px 70px;
   max-width: 1280px;
 }
 
@@ -44,7 +44,7 @@
 
 .paragraph__text {
   padding: 0;
-  margin: 0 0 95px 0;
+  margin: 0 0 109px 0;
   font-family: "Inter", "Arial", "Helvetica", sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -62,7 +62,7 @@
 
 .timescale__segment {
   padding: 0;
-  margin: 0 0 14px 0;
+  margin: 0;
   font-family: "Inter", "Arial", "Helvetica", sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -82,6 +82,7 @@
 
 .timescale__description_back {
   padding: 10px 14px 10px 14px;
+  margin: 0 0 14px 0;
   background-color: #000000;
   color: #ffffff;
   font-weight: 400;
@@ -89,6 +90,7 @@
 
 .timescale__description_front {
   padding: 10px 14px 10px 14px;
+  margin: 0 0 14px 0;
   background-color: #f2f2f2;
   color: #000000;
   font-weight: 400;
@@ -130,7 +132,7 @@
   .paragraph__text {
     font-size: 12px;
     line-height: 18px;
-    margin-bottom: 77px;
+    margin-bottom: 91px;
   }
 
   .timescale__segment_short {
@@ -182,9 +184,11 @@
 
   .timescale__description_back {
     margin-top: 5px;
+    margin-bottom: 12px;
   }
 
   .timescale__description_front {
     margin-top: 5px;
+    margin-bottom: 12px;
   }
 }

@@ -29,11 +29,11 @@ function AboutProject() {
         <div className="timescale">
           <div className="timescale__segment timescale__segment_short">
             <p className="timescale__description_back">1 неделя</p>
-            <p>Back-end</p>
+            Back-end
           </div>
           <div className="timescale__segment timescale__segment_long">
             <p className="timescale__description_front">4 недели</p>
-            <p>Front-end</p>
+            Front-end
           </div>
         </div>
       </div>
