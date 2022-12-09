@@ -92,7 +92,7 @@
 }
 
 @media screen and (min-width: 1285px) {
-  header {
+  .header {
     max-width: 1280px;
     width: 100%;
   }
@@ -238,7 +238,6 @@
 
   .header__burger_active {
     margin-top: 19px;
-    margin-right: 27px;
   }
 
   .header__burger-line {
