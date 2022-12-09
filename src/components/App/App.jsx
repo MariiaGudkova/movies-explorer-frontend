@@ -6,6 +6,7 @@ import { routes } from "../../utils/routes";
 import Header from "../Header/Header.jsx";
 import Promo from "../Promo/Promo.jsx";
 import AboutProject from "../AboutProject/AboutProject.jsx";
+import Techs from "../Techs/Techs.jsx";
 
 function App() {
   const [isLogged, setIsLogged] = React.useState(true);
@@ -33,6 +34,7 @@ function App() {
       <Route exact path={routes.baseRoute}>
         <Promo isLogged={isLogged} />
         <AboutProject />
+        <Techs />
       </Route>
       <Route exact path={routes.signUp}></Route>
       <Route exact path={routes.signIn}></Route>
