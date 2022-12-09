@@ -4,10 +4,7 @@ import "./App.css";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import { routes } from "../../utils/routes";
 import Header from "../Header/Header.jsx";
-import Promo from "../Promo/Promo.jsx";
-import AboutProject from "../AboutProject/AboutProject.jsx";
-import Techs from "../Techs/Techs.jsx";
-import AboutMe from "../AboutMe/AboutMe";
+import Main from "../Main/Main.jsx";
 
 function App() {
   const [isLogged, setIsLogged] = React.useState(true);
@@ -33,10 +30,7 @@ function App() {
         </>
       </ProtectedRoute>
       <Route exact path={routes.baseRoute}>
-        <Promo isLogged={isLogged} />
-        <AboutProject />
-        <Techs />
-        <AboutMe />
+        <Main isLogged={isLogged} />
       </Route>
       <Route exact path={routes.signUp}></Route>
       <Route exact path={routes.signIn}></Route>
