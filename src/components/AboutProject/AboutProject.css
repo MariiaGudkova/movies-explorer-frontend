@@ -56,7 +56,6 @@
 .timescale {
   display: flex;
   flex-direction: row;
-  max-width: 1140px;
   width: 100%;
 }
 
@@ -103,6 +102,25 @@
     justify-content: center;
     align-items: center;
     margin: 0 auto;
+  }
+
+  .about-project__container {
+    max-width: 1280px;
+    width: 100%;
+  }
+
+  .paragraphs-container {
+    max-width: 1280px;
+    width: 100%;
+  }
+
+  .timescale {
+    max-width: 1280px;
+    width: 100%;
+  }
+
+  .timescale__segment_short {
+    width: 300px;
   }
 }
 
