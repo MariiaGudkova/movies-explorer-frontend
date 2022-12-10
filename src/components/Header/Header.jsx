@@ -19,37 +19,39 @@ function Header(props) {
   return ({ isLogged } && location.pathname === routes.movies) ||
     location.pathname === routes.savedMovies ||
     location.pathname === routes.profile ? (
-    <header className="header">
-      <div className="header__container">
-        <Link to={routes.movies}>
-          <img className="header__logo" src={headerLogo} alt="Logo" />
+    <header className="header-centering">
+      <div className="header">
+        <div className="header__container">
+          <Link to={routes.movies}>
+            <img className="header__logo" src={headerLogo} alt="Logo" />
+          </Link>
+          <Navigation open={open} />
+        </div>
+        <Link
+          to={routes.profile}
+          className={!open ? "header__button" : "header__button_active"}
+        >
+          <p className="header__button-text">Аккаунт</p>
+          <img
+            className="header__button-icon"
+            src={headerButtonIcon}
+            alt="Account icon"
+          />
         </Link>
-        <Navigation open={open} />
-      </div>
-      <Link
-        to={routes.profile}
-        className={!open ? "header__button" : "header__button_active"}
-      >
-        <p className="header__button-text">Аккаунт</p>
-        <img
-          className="header__button-icon"
-          src={headerButtonIcon}
-          alt="Account icon"
-        />
-      </Link>
-      <ul
-        className={!open ? "header__burger_active" : "header__burger"}
-        onClick={onClick}
-      >
-        <li className="header__burger-line"></li>
-        <li className="header__burger-line"></li>
-        <li className="header__burger-line"></li>
-      </ul>
-      <div className={!open ? "header__menu" : "header__menu_active"}>
-        <ul className="header__cross" onClick={close}>
-          <li className="header__cross-line"></li>
-          <li className="header__cross-line"></li>
+        <ul
+          className={!open ? "header__burger_active" : "header__burger"}
+          onClick={onClick}
+        >
+          <li className="header__burger-line"></li>
+          <li className="header__burger-line"></li>
+          <li className="header__burger-line"></li>
         </ul>
+        <div className={!open ? "header__menu" : "header__menu_active"}>
+          <ul className="header__cross" onClick={close}>
+            <li className="header__cross-line"></li>
+            <li className="header__cross-line"></li>
+          </ul>
+        </div>
       </div>
     </header>
   ) : (
