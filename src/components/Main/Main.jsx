@@ -4,7 +4,6 @@ import AboutProject from "../AboutProject/AboutProject.jsx";
 import Techs from "../Techs/Techs.jsx";
 import AboutMe from "../AboutMe/AboutMe";
 import Portfolio from "../Portfolio/Portfolio";
-import Footer from "../Footer/Footer";
 
 function Main(props) {
   const { isLogged } = props;
@@ -15,7 +14,6 @@ function Main(props) {
       <Techs />
       <AboutMe />
       <Portfolio />
-      <Footer />
     </>
   );
 }

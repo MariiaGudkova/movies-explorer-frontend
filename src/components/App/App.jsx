@@ -5,6 +5,7 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import { routes } from "../../utils/routes";
 import Header from "../Header/Header.jsx";
 import Main from "../Main/Main.jsx";
+import Footer from "../Footer/Footer";
 
 function App() {
   const [isLogged, setIsLogged] = React.useState(true);
@@ -15,22 +16,26 @@ function App() {
         <>
           <div className={!open ? "overlay" : "overlay_active"} />
           <Header isLogged={isLogged} open={open} setOpen={setOpen} />
+          <Footer />
         </>
       </ProtectedRoute>
       <ProtectedRoute exact path={routes.savedMovies} loggedIn={isLogged}>
         <>
           <div className={!open ? "overlay" : "overlay_active"} />
           <Header isLogged={isLogged} open={open} setOpen={setOpen} />
+          <Footer />
         </>
       </ProtectedRoute>
       <ProtectedRoute exact path={routes.profile} loggedIn={isLogged}>
         <>
           <div className={!open ? "overlay" : "overlay_active"} />
           <Header isLogged={isLogged} open={open} setOpen={setOpen} />
+          <Footer />
         </>
       </ProtectedRoute>
       <Route exact path={routes.baseRoute}>
         <Main isLogged={isLogged} />
+        <Footer />
       </Route>
       <Route exact path={routes.signUp}></Route>
       <Route exact path={routes.signIn}></Route>
