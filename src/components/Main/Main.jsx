@@ -3,6 +3,7 @@ import Promo from "../Promo/Promo.jsx";
 import AboutProject from "../AboutProject/AboutProject.jsx";
 import Techs from "../Techs/Techs.jsx";
 import AboutMe from "../AboutMe/AboutMe";
+import Portfolio from "../Portfolio/Portfolio";
 
 function Main(props) {
   const { isLogged } = props;
@@ -12,6 +13,7 @@ function Main(props) {
       <AboutProject />
       <Techs />
       <AboutMe />
+      <Portfolio />
     </>
   );
 }
