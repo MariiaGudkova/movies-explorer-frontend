@@ -11,7 +11,7 @@ function RegistrationForm(props) {
     redirect === "register"
       ? "Уже зарегистрированы?"
       : "Ещё не зарегистрированы?";
-  const redirectLink = redirect === "register" ? "Войти" : "Зарегистрироваться";
+  const redirectLink = redirect === "register" ? "Войти" : "Регистрация";
   return (
     <div className="form-centering">
       <div className="form-container">
