@@ -1,6 +1,6 @@
 export const routes = {
-  signUp: '/signup',
-  signIn: '/signin',
+  signUp: '/sign-up',
+  signIn: '/sign-in',
   baseRoute: '/',
   movies: '/movies',
   savedMovies: '/saved-movies',
