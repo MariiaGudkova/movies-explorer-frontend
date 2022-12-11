@@ -7,6 +7,7 @@ import Header from "../Header/Header.jsx";
 import Main from "../Main/Main.jsx";
 import Footer from "../Footer/Footer.jsx";
 import Register from "../Register/Register.jsx";
+import Login from "../Login/Login.jsx";
 
 function App() {
   const [isLogged, setIsLogged] = React.useState(true);
@@ -42,7 +43,9 @@ function App() {
       <Route exact path={routes.signUp}>
         <Register emailRegex={emailRegex} />
       </Route>
-      <Route exact path={routes.signIn}></Route>
+      <Route exact path={routes.signIn}>
+        <Login emailRegex={emailRegex} />
+      </Route>
     </Switch>
   );
 }
