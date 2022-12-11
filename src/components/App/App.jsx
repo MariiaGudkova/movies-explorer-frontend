@@ -8,6 +8,7 @@ import Main from "../Main/Main.jsx";
 import Footer from "../Footer/Footer.jsx";
 import Register from "../Register/Register.jsx";
 import Login from "../Login/Login.jsx";
+import NotFound from "../NotFound/NotFound";
 
 function App() {
   const [isLogged, setIsLogged] = React.useState(true);
@@ -45,6 +46,9 @@ function App() {
       </Route>
       <Route exact path={routes.signIn}>
         <Login emailRegex={emailRegex} />
+      </Route>
+      <Route exact path={routes.notFound}>
+        <NotFound />
       </Route>
     </Switch>
   );
