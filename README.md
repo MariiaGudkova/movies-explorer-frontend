@@ -11,4 +11,4 @@
 - JS
 - React
 
-## Ссылка на Github Pages <img src="https://media.giphy.com/media/6z00LdHYkOhw8WAUcA/giphy.gif">
+## Ссылка на Github Pages <img src="https://media.giphy.com/media/6z00LdHYkOhw8WAUcA/giphy.gif" width="100px" height="100px">
