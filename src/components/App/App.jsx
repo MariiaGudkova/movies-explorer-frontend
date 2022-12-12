@@ -4,6 +4,7 @@ import "./App.css";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import { routes } from "../../utils/routes.js";
 import Header from "../Header/Header.jsx";
+import SearchForm from "../SearchForm/SearchForm.jsx";
 import Main from "../Main/Main.jsx";
 import Footer from "../Footer/Footer.jsx";
 import Profile from "../Profile/Profile";
@@ -22,6 +23,7 @@ function App() {
         <>
           <div className={!open ? "overlay" : "overlay_active"} />
           <Header isLogged={isLogged} open={open} setOpen={setOpen} />
+          <SearchForm />
           <Footer />
         </>
       </ProtectedRoute>
@@ -29,6 +31,7 @@ function App() {
         <>
           <div className={!open ? "overlay" : "overlay_active"} />
           <Header isLogged={isLogged} open={open} setOpen={setOpen} />
+          <SearchForm />
           <Footer />
         </>
       </ProtectedRoute>
