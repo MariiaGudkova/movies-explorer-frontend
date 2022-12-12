@@ -6,9 +6,11 @@ import { routes } from "../../utils/routes.js";
 import Header from "../Header/Header.jsx";
 import Main from "../Main/Main.jsx";
 import Footer from "../Footer/Footer.jsx";
+import Profile from "../Profile/Profile";
 import Register from "../Register/Register.jsx";
 import Login from "../Login/Login.jsx";
 import NotFound from "../NotFound/NotFound";
+import Preloader from "../Preloader/Preloader.jsx";
 
 function App() {
   const [isLogged, setIsLogged] = React.useState(true);
@@ -34,7 +36,7 @@ function App() {
         <>
           <div className={!open ? "overlay" : "overlay_active"} />
           <Header isLogged={isLogged} open={open} setOpen={setOpen} />
-          <Footer />
+          <Profile />
         </>
       </ProtectedRoute>
       <Route exact path={routes.baseRoute}>
