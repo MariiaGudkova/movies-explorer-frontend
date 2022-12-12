@@ -17,7 +17,7 @@ function Login(props) {
       linkAdress={routes.signUp}
     >
       <label className="form__input-label" htmlFor="email">
-        Email
+        E-mail
       </label>
       <input
         className="form__input form__input_email"

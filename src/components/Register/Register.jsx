@@ -32,7 +32,7 @@ function Register(props) {
       />
       <span className="form__input-error name-input-error"></span>
       <label className="form__input-label" htmlFor="email">
-        Email
+        E-mail
       </label>
       <input
         className="form__input form__input_email"
