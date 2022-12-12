@@ -22,7 +22,7 @@ function Header(props) {
     <header className="header-centering">
       <div className="header">
         <div className="header__container">
-          <Link to={routes.movies}>
+          <Link to={routes.baseRoute}>
             <img className="header__logo" src={headerLogo} alt="Logo" />
           </Link>
           <Navigation open={open} />
