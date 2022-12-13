@@ -12,3 +12,5 @@
 - React
 
 ## Ссылка на Github Pages <img src="https://media.giphy.com/media/6z00LdHYkOhw8WAUcA/giphy.gif" width="200px" height="200px">
+
+<a href="https://mariiagudkova.github.io/movies-explorer-frontend/" target="_blank">Сервис поиска фильмов</a>
