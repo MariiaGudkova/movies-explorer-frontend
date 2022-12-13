@@ -24,7 +24,7 @@ export const movies = [
     title: "В погоне за Бенкси",
     duration: "27 минут",
     cover: cover2,
-    isSaved: true,
+    isSaved: false,
   },
   {
     _id: 3,
@@ -86,7 +86,7 @@ export const movies = [
     title: "В погоне за Бенкси",
     duration: "27 минут",
     cover: cover11,
-    isSaved: true,
+    isSaved: false,
   },
   {
     _id: 12,

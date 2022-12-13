@@ -6,6 +6,7 @@ import { routes } from "../../utils/routes.js";
 import Header from "../Header/Header.jsx";
 import { movies } from "../../utils/constants.js";
 import Movies from "../Movies/Movies";
+import SavedMovies from "../SavedMovies/SavedMovies.jsx";
 import Main from "../Main/Main.jsx";
 import Footer from "../Footer/Footer.jsx";
 import Profile from "../Profile/Profile";
@@ -16,6 +17,7 @@ import NotFound from "../NotFound/NotFound";
 function App() {
   const [isLogged, setIsLogged] = React.useState(true);
   const [open, setOpen] = React.useState(false);
+  const savedMovies = movies.filter((movie) => movie.isSaved === true);
   const emailRegex = /^\S+@\S+\.\S+$/;
   return (
     <Switch>
@@ -31,6 +33,7 @@ function App() {
         <>
           <div className={!open ? "overlay" : "overlay_active"} />
           <Header isLogged={isLogged} open={open} setOpen={setOpen} />
+          <SavedMovies movies={savedMovies} />
           <Footer />
         </>
       </ProtectedRoute>
