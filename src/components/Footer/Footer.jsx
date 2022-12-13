@@ -13,12 +13,16 @@ function Footer() {
             <a
               href="https://practicum.yandex.ru/"
               className="footer__link footer__link_yandex"
+              target="_blank"
+              rel="noreferrer"
             >
               Яндекс.Практикум
             </a>
             <a
               href="https://github.com/"
               className="footer__link footer__link_github"
+              target="_blank"
+              rel="noreferrer"
             >
               Github
             </a>

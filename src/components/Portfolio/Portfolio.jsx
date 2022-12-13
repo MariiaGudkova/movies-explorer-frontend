@@ -12,6 +12,8 @@ function Portfolio() {
             <a
               href="https://github.com/MariiaGudkova/react-mesto-api-full"
               className="portfolio__link"
+              target="_blank"
+              rel="noreferrer"
             >
               <img
                 className="portfolio__arrow"
@@ -25,6 +27,8 @@ function Portfolio() {
             <a
               href="https://github.com/MariiaGudkova/Messenger_front_Itransition"
               className="portfolio__link"
+              target="_blank"
+              rel="noreferrer"
             >
               <img
                 className="portfolio__arrow"
@@ -38,6 +42,8 @@ function Portfolio() {
             <a
               href="https://github.com/MariiaGudkova/Web_application_Itransition"
               className="portfolio__link"
+              target="_blank"
+              rel="noreferrer"
             >
               <img
                 className="portfolio__arrow"

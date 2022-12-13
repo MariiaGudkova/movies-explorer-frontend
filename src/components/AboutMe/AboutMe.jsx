@@ -22,6 +22,8 @@ function AboutMe() {
             <a
               className="info__link-github"
               href="https://github.com/MariiaGudkova"
+              target="_blank"
+              rel="noreferrer"
             >
               Ссылка на мой Github
             </a>
