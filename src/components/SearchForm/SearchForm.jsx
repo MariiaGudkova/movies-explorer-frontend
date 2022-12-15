@@ -11,14 +11,13 @@ function SearchForm() {
           name="search-form"
           action="#"
           autoComplete="off"
-          noValidate
-          onSubmit={() => {}}
         >
           <input
             className="search__input"
             name="search-input"
             type="text"
             placeholder="Фильм"
+            required
           />
           <button className="search__button" type="submit">
             <img className="search__logo" src={searchLoupe} alt="Loupe" />
