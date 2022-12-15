@@ -25,7 +25,7 @@ function Header(props) {
           <Link to={routes.baseRoute}>
             <img className="header__logo" src={headerLogo} alt="Logo" />
           </Link>
-          <Navigation open={open} />
+          <Navigation open={open} onClick={onClick} />
         </div>
         <Link
           to={routes.profile}

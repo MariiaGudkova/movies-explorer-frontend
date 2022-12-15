@@ -4,7 +4,11 @@ import "./Navigation.css";
 import { routes } from "../../utils/routes";
 
 function Navigation(props) {
-  const { open } = props;
+  const { open, onClick } = props;
+
+  function handleClick() {
+    onClick();
+  }
   return (
     <nav className={!open ? "navigation" : "navigation navigation_active"}>
       <ul className="navigation__list">
@@ -12,6 +16,7 @@ function Navigation(props) {
           <Link
             to={routes.baseRoute}
             className="navigation__link navigation__link_indent"
+            onClick={() => handleClick()}
           >
             Главная
           </Link>
@@ -20,12 +25,17 @@ function Navigation(props) {
           <Link
             to={routes.movies}
             className="navigation__link navigation__link_indent"
+            onClick={() => handleClick()}
           >
             Фильмы
           </Link>
         </li>
         <li className="navigation__item">
-          <Link to={routes.savedMovies} className="navigation__link">
+          <Link
+            to={routes.savedMovies}
+            className="navigation__link"
+            onClick={() => handleClick()}
+          >
             Сохранённые фильмы
           </Link>
         </li>
