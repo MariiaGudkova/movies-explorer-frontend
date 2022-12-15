@@ -79,20 +79,20 @@
   flex-grow: 5;
 }
 
-.timescale__description_back {
+.timescale__description {
   padding: 10px 14px 10px 14px;
   margin: 0 0 14px 0;
-  background-color: #000000;
-  color: #ffffff;
   font-weight: 400;
 }
 
+.timescale__description_back {
+  background-color: #000000;
+  color: #ffffff;
+}
+
 .timescale__description_front {
-  padding: 10px 14px 10px 14px;
-  margin: 0 0 14px 0;
   background-color: #f2f2f2;
   color: #000000;
-  font-weight: 400;
 }
 
 @media screen and (min-width: 1285px) {
@@ -200,12 +200,7 @@
     width: 100px;
   }
 
-  .timescale__description_back {
-    margin-top: 5px;
-    margin-bottom: 12px;
-  }
-
-  .timescale__description_front {
+  .timescale__description {
     margin-top: 5px;
     margin-bottom: 12px;
   }

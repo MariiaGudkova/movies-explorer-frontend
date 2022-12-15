@@ -29,7 +29,9 @@ function Header(props) {
         </div>
         <Link
           to={routes.profile}
-          className={!open ? "header__button" : "header__button_active"}
+          className={
+            !open ? "header__button" : "header__button header__button_active"
+          }
         >
           <p className="header__button-text">Аккаунт</p>
           <img
@@ -39,14 +41,20 @@ function Header(props) {
           />
         </Link>
         <ul
-          className={!open ? "header__burger_active" : "header__burger"}
+          className={
+            !open ? "header__burger header__burger_active" : "header__burger"
+          }
           onClick={onClick}
         >
           <li className="header__burger-line"></li>
           <li className="header__burger-line"></li>
           <li className="header__burger-line"></li>
         </ul>
-        <div className={!open ? "header__menu" : "header__menu_active"}>
+        <div
+          className={
+            !open ? "header__menu" : "header__menu header__menu_active"
+          }
+        >
           <ul className="header__cross" onClick={close}>
             <li className="header__cross-line"></li>
             <li className="header__cross-line"></li>

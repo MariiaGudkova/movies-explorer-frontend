@@ -6,7 +6,7 @@ import { routes } from "../../utils/routes";
 function Navigation(props) {
   const { open } = props;
   return (
-    <nav className={!open ? "navigation" : "navigation_active"}>
+    <nav className={!open ? "navigation" : "navigation navigation_active"}>
       <ul className="navigation__list">
         <li className="navigation__item navigation__burger-item navigation__burger-item_active">
           <Link

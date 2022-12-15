@@ -23,7 +23,7 @@ function App() {
     <Switch>
       <ProtectedRoute exact path={routes.movies} loggedIn={isLogged}>
         <>
-          <div className={!open ? "overlay" : "overlay_active"} />
+          <div className={!open ? "overlay" : "overlay overlay_active"} />
           <Header isLogged={isLogged} open={open} setOpen={setOpen} />
           <Movies movies={movies} />
           <Footer />
@@ -31,7 +31,7 @@ function App() {
       </ProtectedRoute>
       <ProtectedRoute exact path={routes.savedMovies} loggedIn={isLogged}>
         <>
-          <div className={!open ? "overlay" : "overlay_active"} />
+          <div className={!open ? "overlay" : "overlay overlay_active"} />
           <Header isLogged={isLogged} open={open} setOpen={setOpen} />
           <SavedMovies movies={savedMovies} />
           <Footer />
@@ -39,7 +39,7 @@ function App() {
       </ProtectedRoute>
       <ProtectedRoute exact path={routes.profile} loggedIn={isLogged}>
         <>
-          <div className={!open ? "overlay" : "overlay_active"} />
+          <div className={!open ? "overlay" : "overlay overlay_active"} />
           <Header isLogged={isLogged} open={open} setOpen={setOpen} />
           <Profile />
         </>
