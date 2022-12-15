@@ -24,7 +24,7 @@
 }
 
 .form__input:focus {
-  outline: none;
+  outline: 2px inset rgba(0, 0, 0, 0.1);
 }
 
 .form__input-error {
