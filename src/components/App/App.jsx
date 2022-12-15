@@ -19,6 +19,15 @@ function App() {
   const [open, setOpen] = React.useState(false);
   const savedMovies = movies.filter((movie) => movie.isSaved === true);
   const emailRegex = /^\S+@\S+\.\S+$/;
+
+  React.useEffect(() => {
+    if (open) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [open]);
+
   return (
     <Switch>
       <ProtectedRoute exact path={routes.movies} loggedIn={isLogged}>

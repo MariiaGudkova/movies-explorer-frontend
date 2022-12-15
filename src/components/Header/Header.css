@@ -176,7 +176,6 @@
   }
 
   .header__menu_active {
-    position: relative;
     display: flex;
     flex-direction: column;
     top: 0;
