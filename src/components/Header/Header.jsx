@@ -63,11 +63,13 @@ function Header(props) {
       </div>
     </header>
   ) : (
-    <header className="header header_promo">
-      <Link to={routes.baseRoute}>
-        <img className="header__logo" src={headerLogo} alt="Logo" />
-      </Link>
-      <NavTab />
+    <header className="header-centering header-centering_promo">
+      <div className="header header_promo">
+        <Link to={routes.baseRoute}>
+          <img className="header__logo" src={headerLogo} alt="Logo" />
+        </Link>
+        <NavTab />
+      </div>
     </header>
   );
 }

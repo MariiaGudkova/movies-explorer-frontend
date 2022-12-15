@@ -4,10 +4,10 @@ import "./Techs.css";
 function Techs() {
   return (
     <>
-      <div className="techs-background">
-        <div className="techs">
+      <section className="techs">
+        <div className="techs__container">
           <h2 className="techs__title">Технологии</h2>
-          <div className="techs__container">
+          <div className="techs__content">
             <h3 className="techs__subtitle">7 технологий</h3>
             <p className="techs__text">
               На курсе веб-разработки мы освоили технологии, которые применили в
@@ -24,7 +24,7 @@ function Techs() {
             </ul>
           </div>
         </div>
-      </div>
+      </section>
     </>
   );
 }

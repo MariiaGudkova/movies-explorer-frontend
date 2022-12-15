@@ -13,7 +13,7 @@ function RegistrationForm(props) {
       : "Ещё не зарегистрированы?";
   const redirectLink = redirect === "register" ? "Войти" : "Регистрация";
   return (
-    <div className="form-centering">
+    <main className="authorization">
       <div className="form-container">
         <Link className="form-container__logo" to={routes.baseRoute}>
           <img src={formLogo} alt="Logo" />
@@ -44,7 +44,7 @@ function RegistrationForm(props) {
           </Link>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

@@ -4,10 +4,10 @@ import FilterCheckbox from "../FilterCheckbox/FilterCheckbox.jsx";
 
 function SearchForm() {
   return (
-    <div className="search-centering">
-      <div className="search-container">
+    <section className="search">
+      <div className="search__container">
         <form
-          className="search"
+          className="search__form"
           name="search-form"
           action="#"
           autoComplete="off"
@@ -26,7 +26,7 @@ function SearchForm() {
           <FilterCheckbox />
         </form>
       </div>
-    </div>
+    </section>
   );
 }
 

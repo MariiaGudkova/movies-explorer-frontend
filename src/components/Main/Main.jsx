@@ -5,15 +5,16 @@ import Techs from "../Techs/Techs.jsx";
 import AboutMe from "../AboutMe/AboutMe";
 import Portfolio from "../Portfolio/Portfolio";
 
-function Main(props) {
-  const { isLogged } = props;
+function Main() {
   return (
     <>
-      <Promo isLogged={isLogged} />
-      <AboutProject />
-      <Techs />
-      <AboutMe />
-      <Portfolio />
+      <main className="main-container">
+        <Promo />
+        <AboutProject />
+        <Techs />
+        <AboutMe />
+        <Portfolio />
+      </main>
     </>
   );
 }

@@ -3,6 +3,11 @@
   flex-direction: column;
 }
 
+.header-centering_promo {
+  background-color: #f3c1f8;
+  width: 100%;
+}
+
 .header {
   display: flex;
   flex-direction: row;

@@ -7,9 +7,11 @@ function Movies(props) {
   const { movies } = props;
   return (
     <>
-      <SearchForm />
-      <MoviesCardList movies={movies} />
-      {/* <Preloader /> */}
+      <main className="main-container">
+        <SearchForm />
+        <MoviesCardList movies={movies} />
+        {/* <Preloader /> */}
+      </main>
     </>
   );
 }

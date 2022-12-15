@@ -1,9 +1,9 @@
-.search-centering {
+.search {
   display: flex;
   flex-direction: column;
 }
 
-.search-container {
+.search__container {
   position: relative;
   display: flex;
   flex-direction: row;
@@ -13,7 +13,7 @@
   border-bottom: 1px solid #e8e8e8;
 }
 
-.search {
+.search__form {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -65,18 +65,18 @@
 }
 
 @media screen and (min-width: 1285px) {
-  .search-centering {
+  .search {
     align-items: center;
   }
 
-  .search-container {
+  .search__container {
     max-width: 1280px;
     width: 100%;
   }
 }
 
 @media screen and (max-width: 820px) {
-  .search-container {
+  .search__container {
     margin: 75px 30px 80px 30px;
     padding-bottom: 106px;
     max-width: 708px;
@@ -90,11 +90,11 @@
 }
 
 @media screen and (max-width: 760px) {
-  .search-centering {
+  .search {
     align-items: center;
   }
 
-  .search-container {
+  .search__container {
     max-width: 500px;
     width: 100%;
   }
@@ -107,14 +107,14 @@
 }
 
 @media screen and (max-width: 520px) {
-  .search-container {
+  .search__container {
     max-width: 400px;
     width: 100%;
   }
 }
 
 @media screen and (max-width: 420px) {
-  .search-container {
+  .search__container {
     margin: 79px 10px 50px 10px;
     padding-bottom: 109px;
     max-width: 300px;

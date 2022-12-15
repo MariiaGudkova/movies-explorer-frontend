@@ -1,9 +1,9 @@
-.portfolio-container {
+.portfolio {
   display: flex;
   flex-direction: column;
 }
 
-.portfolio {
+.portfolio__container {
   display: flex;
   flex-direction: column;
   margin: 0 70px 125px 70px;
@@ -75,18 +75,18 @@
 }
 
 @media screen and (min-width: 1285px) {
-  .portfolio-container {
+  .portfolio {
     align-items: center;
   }
 
-  .portfolio {
+  .portfolio__container {
     max-width: 1280px;
     width: 100%;
   }
 }
 
 @media screen and (max-width: 870px) {
-  .portfolio {
+  .portfolio__container {
     margin: 0 50px 90px 50px;
   }
 
@@ -113,7 +113,7 @@
 }
 
 @media screen and (max-width: 520px) {
-  .portfolio {
+  .portfolio__container {
     margin: 0 14px 70px 14px;
   }
 }

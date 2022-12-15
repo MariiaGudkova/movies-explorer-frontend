@@ -45,7 +45,8 @@ function App() {
         </>
       </ProtectedRoute>
       <Route exact path={routes.baseRoute}>
-        <Main isLogged={isLogged} />
+        <Header isLogged={isLogged} />
+        <Main />
         <Footer />
       </Route>
       <Route exact path={routes.signUp}>

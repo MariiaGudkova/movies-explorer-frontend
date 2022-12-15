@@ -8,8 +8,10 @@ function SavedMovies(props) {
 
   return (
     <>
-      <SearchForm />
-      <MoviesCardList movies={movies} isPageSavedMovies={isPageSavedMovies} />
+      <main className="main-container">
+        <SearchForm />
+        <MoviesCardList movies={movies} isPageSavedMovies={isPageSavedMovies} />
+      </main>
     </>
   );
 }

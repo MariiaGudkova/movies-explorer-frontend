@@ -6,8 +6,8 @@ function Profile(props) {
     email: "pochta@yandex.ru",
   };
   return (
-    <div className="profile-centering">
-      <div className="profile">
+    <main className="profile">
+      <div className="profile__container">
         <h1 className="profile__title">Привет, Виталий!</h1>
         <div className="user-data">
           <div className="user-data__item user-data__item_name">
@@ -36,7 +36,7 @@ function Profile(props) {
           </button>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 

@@ -4,7 +4,7 @@ import MoviesCard from "../MoviesCard/MoviesCard.jsx";
 function MoviesCardList(props) {
   const { movies, isPageSavedMovies } = props;
   return (
-    <div className="movies">
+    <section className="movies">
       <ul className="movies__list">
         {movies.map((movie) => {
           return (
@@ -19,7 +19,7 @@ function MoviesCardList(props) {
       <button className="movies__button" type="button" onClick={() => {}}>
         Ещё
       </button>
-    </div>
+    </section>
   );
 }
 
