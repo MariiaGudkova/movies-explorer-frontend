@@ -16,7 +16,7 @@ function Login(props) {
       redirect={"login"}
       linkAdress={routes.signUp}
     >
-      <label className="form__input-label" htmlFor="email">
+      <label className="form__input-label" htmlFor="email-login-input">
         E-mail
       </label>
       <input
@@ -32,7 +32,7 @@ function Login(props) {
         onChange={() => {}}
       />
       <span className="form__input-error email-input-error"></span>
-      <label className="form__input-label" htmlFor="password">
+      <label className="form__input-label" htmlFor="password-login-input">
         Пароль
       </label>
       <input

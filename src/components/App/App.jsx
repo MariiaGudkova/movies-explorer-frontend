@@ -50,10 +50,10 @@ function App() {
         <Footer />
       </Route>
       <Route exact path={routes.signUp}>
-        <Register emailRegex={emailRegex} />
+        <Register />
       </Route>
       <Route exact path={routes.signIn}>
-        <Login emailRegex={emailRegex} />
+        <Login />
       </Route>
       <Route exact path={routes.notFound}>
         <NotFound />

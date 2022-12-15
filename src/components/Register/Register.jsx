@@ -3,7 +3,6 @@ import RegistrationForm from "../RegistrationForm/RegistrationForm.jsx";
 import { routes } from "../../utils/routes";
 
 function Register(props) {
-  const { emailRegex } = props;
   function handleSubmit(event) {
     event.preventDefault();
   }
@@ -16,7 +15,7 @@ function Register(props) {
       redirect={"register"}
       linkAdress={routes.signIn}
     >
-      <label className="form__input-label" htmlFor="name">
+      <label className="form__input-label" htmlFor="name-register-input">
         Имя
       </label>
       <input
@@ -31,7 +30,7 @@ function Register(props) {
         onChange={() => {}}
       />
       <span className="form__input-error name-input-error"></span>
-      <label className="form__input-label" htmlFor="email">
+      <label className="form__input-label" htmlFor="email-register-input">
         E-mail
       </label>
       <input
@@ -43,11 +42,10 @@ function Register(props) {
         required
         minLength="6"
         maxLength="64"
-        mask={emailRegex}
         onChange={() => {}}
       />
       <span className="form__input-error email-input-error"></span>
-      <label className="form__input-label" htmlFor="password">
+      <label className="form__input-label" htmlFor="password-register-input">
         Пароль
       </label>
       <input
