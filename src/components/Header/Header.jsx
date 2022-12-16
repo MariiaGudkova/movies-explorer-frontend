@@ -8,8 +8,9 @@ import NavTab from "../NavTab/NavTab";
 import { routes } from "../../utils/routes";
 
 function Header(props) {
-  const { isLogged, open, setOpen } = props;
+  const { isLogged, open, setOpen, onLogoutProfile } = props;
   const close = () => setOpen(false);
+  const logout = () => onLogoutProfile();
   const location = useLocation();
 
   function onClick() {
@@ -20,10 +21,20 @@ function Header(props) {
     location.pathname === routes.savedMovies ||
     location.pathname === routes.profile ? (
     <header className="header-centering">
+      <div
+        className={
+          !open ? "header-overlay" : "header-overlay header-overlay_active "
+        }
+      />
       <div className="header">
         <div className="header__container">
           <Link to={routes.baseRoute}>
-            <img className="header__logo" src={headerLogo} alt="Logo" />
+            <img
+              className="header__logo"
+              src={headerLogo}
+              alt="Logo"
+              onClick={logout}
+            />
           </Link>
           <Navigation open={open} onClick={onClick} />
         </div>
@@ -32,6 +43,7 @@ function Header(props) {
           className={
             !open ? "header__button" : "header__button header__button_active"
           }
+          onClick={onClick}
         >
           <p className="header__button-text">Аккаунт</p>
           <img

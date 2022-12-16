@@ -1,3 +1,13 @@
+.header-overlay_active {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 3;
+}
+
 .header-centering {
   display: flex;
   flex-direction: column;
@@ -184,7 +194,7 @@
     width: 100%;
     max-width: 520px;
     min-width: 320px;
-    position: fixed;
+    position: absolute;
     background-color: #ffffff;
     z-index: 3;
   }
