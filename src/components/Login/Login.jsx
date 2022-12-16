@@ -1,11 +1,14 @@
 import "./Login.css";
 import RegistrationForm from "../RegistrationForm/RegistrationForm.jsx";
 import { routes } from "../../utils/routes";
+import { useForm } from "../../hooks/useForm.js";
 
 function Login(props) {
-  const { emailRegex } = props;
+  const { emailRegex, onAthorizationSubmit } = props;
+  const { values, handleChange, setValues } = useForm({});
   function handleSubmit(event) {
     event.preventDefault();
+    onAthorizationSubmit(values);
   }
   return (
     <RegistrationForm
@@ -29,7 +32,7 @@ function Login(props) {
         minLength="6"
         maxLength="64"
         mask={emailRegex}
-        onChange={() => {}}
+        onChange={handleChange}
       />
       <span className="form__input-error email-input-error"></span>
       <label className="form__input-label" htmlFor="password-login-input">
@@ -45,7 +48,7 @@ function Login(props) {
         minLength="6"
         maxLength="32"
         autoComplete="off"
-        onChange={() => {}}
+        onChange={handleChange}
       />
       <span className="form__input-error form__input-error_active  login-password-input-error">
         Ошибка валидации

@@ -1,10 +1,14 @@
 import "./Register.css";
 import RegistrationForm from "../RegistrationForm/RegistrationForm.jsx";
 import { routes } from "../../utils/routes";
+import { useForm } from "../../hooks/useForm.js";
 
 function Register(props) {
+  const { onRegistrationSubmit } = props;
+  const { values, handleChange, setValues } = useForm({});
   function handleSubmit(event) {
     event.preventDefault();
+    onRegistrationSubmit(values);
   }
   return (
     <RegistrationForm
@@ -27,7 +31,7 @@ function Register(props) {
         required
         minLength="2"
         maxLength="30"
-        onChange={() => {}}
+        onChange={handleChange}
       />
       <span className="form__input-error name-input-error"></span>
       <label className="form__input-label" htmlFor="email-register-input">
@@ -42,7 +46,7 @@ function Register(props) {
         required
         minLength="6"
         maxLength="64"
-        onChange={() => {}}
+        onChange={handleChange}
       />
       <span className="form__input-error email-input-error"></span>
       <label className="form__input-label" htmlFor="password-register-input">
@@ -58,7 +62,7 @@ function Register(props) {
         minLength="6"
         maxLength="32"
         autoComplete="off"
-        onChange={() => {}}
+        onChange={handleChange}
       />
       <span className="form__input-error form__input-error_active  password-input-error ">
         Ошибка валидации

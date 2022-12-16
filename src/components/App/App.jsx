@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import "./App.css";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import { routes } from "../../utils/routes.js";
@@ -15,42 +16,65 @@ import Login from "../Login/Login.jsx";
 import NotFound from "../NotFound/NotFound";
 
 function App() {
-  const [isLogged, setIsLogged] = React.useState(true);
+  const [currentUser, setCurrentUser] = React.useState({});
+  const [isLogged, setIsLogged] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const savedMovies = movies.filter((movie) => movie.isSaved === true);
   const emailRegex = /^\S+@\S+\.\S+$/;
+  const history = useHistory();
 
-  React.useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-  }, [open]);
+  function handleRegistration(authData) {
+    history.push(routes.signIn);
+  }
+
+  function hanldeAthorization(authData) {
+    const { email, password } = authData;
+    setCurrentUser(authData);
+    setIsLogged(true);
+    history.push(routes.movies);
+  }
+
+  function logoutUserProfile() {
+    history.push(routes.signIn);
+    setIsLogged(false);
+    setCurrentUser({});
+  }
 
   return (
     <Switch>
       <ProtectedRoute exact path={routes.movies} loggedIn={isLogged}>
         <>
-          <div className={!open ? "overlay" : "overlay overlay_active"} />
-          <Header isLogged={isLogged} open={open} setOpen={setOpen} />
+          <Header
+            isLogged={isLogged}
+            open={open}
+            setOpen={setOpen}
+            onLogoutProfile={logoutUserProfile}
+          />
           <Movies movies={movies} />
           <Footer />
         </>
       </ProtectedRoute>
       <ProtectedRoute exact path={routes.savedMovies} loggedIn={isLogged}>
         <>
-          <div className={!open ? "overlay" : "overlay overlay_active"} />
-          <Header isLogged={isLogged} open={open} setOpen={setOpen} />
+          <Header
+            isLogged={isLogged}
+            open={open}
+            setOpen={setOpen}
+            onLogoutProfile={logoutUserProfile}
+          />
           <SavedMovies movies={savedMovies} />
           <Footer />
         </>
       </ProtectedRoute>
       <ProtectedRoute exact path={routes.profile} loggedIn={isLogged}>
         <>
-          <div className={!open ? "overlay" : "overlay overlay_active"} />
-          <Header isLogged={isLogged} open={open} setOpen={setOpen} />
-          <Profile />
+          <Header
+            isLogged={isLogged}
+            open={open}
+            setOpen={setOpen}
+            onLogoutProfile={logoutUserProfile}
+          />
+          <Profile userData={currentUser} onLogout={logoutUserProfile} />
         </>
       </ProtectedRoute>
       <Route exact path={routes.baseRoute}>
@@ -59,10 +83,10 @@ function App() {
         <Footer />
       </Route>
       <Route exact path={routes.signUp}>
-        <Register />
+        <Register onRegistrationSubmit={handleRegistration} />
       </Route>
       <Route exact path={routes.signIn}>
-        <Login />
+        <Login onAthorizationSubmit={hanldeAthorization} />
       </Route>
       <Route exact path={routes.notFound}>
         <NotFound />
