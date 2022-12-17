@@ -1,0 +1,131 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 410px;
+  width: 100%;
+}
+
+.profile__title {
+  padding: 0;
+  margin: 20px 0 123px 0;
+  font-family: "Inter", "Arial", "Helvetica", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  color: #000000;
+}
+
+.user-data {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 220px;
+}
+
+.user-data__item {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-family: "Inter", "Arial", "Helvetica", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 13px;
+  color: #000000;
+}
+
+.user-data__item_name {
+  padding-bottom: 16px;
+  margin-bottom: 17px;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.user-data__title {
+  padding: 0;
+  margin: 0;
+}
+
+.user-data__text {
+  padding: 0;
+  margin: 0;
+  font-weight: 400;
+}
+
+.profile__buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile__button-item {
+  border: none;
+  background: transparent;
+  font-family: "Inter", "Arial", "Helvetica", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #000000;
+  -webkit-transition: font-weight 0.5s ease-in;
+  transition: font-weight 0.5s ease-in;
+}
+
+.profile__button-item:hover {
+  font-weight: 500;
+  -webkit-transition: font-weight 0.5s ease-out;
+  transition: font-weight 0.5s ease-out;
+}
+
+.profile__button-item_edit {
+  margin-bottom: 16px;
+}
+
+.profile__button-item_exit {
+  color: #ff4062;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__title {
+    margin: 230px 0 98px 0;
+  }
+
+  .user-data {
+    margin-bottom: 210px;
+  }
+
+  .profile__button-item_edit {
+    margin-bottom: 13px;
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .profile__container {
+    max-width: 260px;
+  }
+
+  .profile__title {
+    margin: 65px 0 82px 0;
+  }
+
+  .user-data {
+    margin-bottom: 379px;
+  }
+
+  .profile__button-item {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}

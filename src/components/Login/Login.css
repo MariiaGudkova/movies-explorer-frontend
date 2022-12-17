@@ -1,0 +1,9 @@
+.login-password-input-error {
+  margin-bottom: 158px;
+}
+
+@media screen and (max-width: 520px) {
+  .login-password-input-error {
+    margin-bottom: 247px;
+  }
+}
