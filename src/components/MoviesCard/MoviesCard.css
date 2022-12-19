@@ -46,6 +46,8 @@
   height: 200px;
   margin-bottom: 18px;
   object-fit: cover;
+  object-position: center;
+  cursor: pointer;
 }
 
 .movie__save-button {

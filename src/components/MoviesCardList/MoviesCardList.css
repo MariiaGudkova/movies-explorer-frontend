@@ -6,7 +6,7 @@
 
 .movies__list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 500px));
   column-gap: 28px;
   row-gap: 31.5px;
   padding: 0;
