@@ -1,8 +1,30 @@
 import "./SearchForm.css";
 import searchLoupe from "../../images/search__logo.svg";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox.jsx";
+import { useForm } from "../../hooks/useForm.js";
 
-function SearchForm() {
+function SearchForm(props) {
+  const {
+    onSearchSubmit,
+    searchFormEmptyErrorText,
+    searchFormNotFoundErrorText,
+    isSearchFilmEmptyError,
+    isSearchFilmNotFoundError,
+  } = props;
+  const { values, handleChange } = useForm({});
+  const isErrorShown = isSearchFilmEmptyError || isSearchFilmNotFoundError;
+  let errorMessage = "";
+  if (isSearchFilmEmptyError) {
+    errorMessage = searchFormEmptyErrorText;
+  } else if (isSearchFilmNotFoundError) {
+    errorMessage = searchFormNotFoundErrorText;
+  }
+
+  function onSubmit(event) {
+    event.preventDefault();
+    onSearchSubmit(values);
+  }
+
   return (
     <section className="search">
       <div className="search__container">
@@ -11,14 +33,26 @@ function SearchForm() {
           name="search-form"
           action="#"
           autoComplete="off"
+          noValidate
+          onSubmit={onSubmit}
         >
           <input
             className="search__input"
-            name="search-input"
+            name="searchString"
             type="text"
             placeholder="Фильм"
             required
+            onChange={handleChange}
           />
+          <span
+            className={
+              !isErrorShown
+                ? "search__input-error"
+                : "search__input-error search__input-error_active"
+            }
+          >
+            {errorMessage}
+          </span>
           <button className="search__button" type="submit">
             <img className="search__logo" src={searchLoupe} alt="Loupe" />
           </button>

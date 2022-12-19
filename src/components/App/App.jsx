@@ -5,7 +5,6 @@ import "./App.css";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import { routes } from "../../utils/routes.js";
 import Header from "../Header/Header.jsx";
-import { movies } from "../../utils/constants.js";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies.jsx";
 import Main from "../Main/Main.jsx";
@@ -15,21 +14,30 @@ import Register from "../Register/Register.jsx";
 import Login from "../Login/Login.jsx";
 import NotFound from "../NotFound/NotFound";
 import { getMovies } from "../../utils/MoviesApi.js";
+import {
+  searchFormEmptyErrorText,
+  searchFormNotFoundErrorText,
+} from "../../utils/constants.js";
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
-  const [isLogged, setIsLogged] = React.useState(false);
-  const [movies, setMovies] = React.useState([]);
-  const [open, setOpen] = React.useState(false);
-  const savedMovies = movies.filter((movie) => movie.isSaved === true);
+  const [isLogin, setIsLogin] = React.useState(false);
+  const [allMovies, setAllMovies] = React.useState([]);
+  const [moviesSearched, setMoviesSearched] = React.useState([]);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [isSearchFilmEmptyError, setIsSearchFilmEmptyError] =
+    React.useState(false);
+  const [isSearchFilmNotFoundError, setIsSearchFilmNotFoundError] =
+    React.useState(false);
+  const savedMovies = allMovies.filter((movie) => movie.isSaved === true);
   const emailRegex = /^\S+@\S+\.\S+$/;
   const history = useHistory();
 
   React.useEffect(() => {
-    if (isLogged) {
+    if (isLogin) {
       getMoviesInfo();
     }
-  }, [isLogged]);
+  }, [isLogin]);
 
   function handleRegistration(authData) {
     history.push(routes.signIn);
@@ -38,66 +46,93 @@ function App() {
   function hanldeAthorization(authData) {
     const { email, password } = authData;
     setCurrentUser(authData);
-    setIsLogged(true);
+    setIsLogin(true);
     history.push(routes.movies);
   }
 
   function logoutUserProfile() {
     history.push(routes.signIn);
-    setIsLogged(false);
+    setIsLogin(false);
     setCurrentUser({});
   }
 
   async function getMoviesInfo() {
     try {
       const moviesInfo = await getMovies();
-      setMovies(moviesInfo);
+      setAllMovies(moviesInfo);
     } catch (e) {
       console.error(e);
     }
   }
 
-  function searchMovie(name) {}
+  function searchMovie(searchData) {
+    const { searchString } = searchData;
+    if (!searchString || searchString.length < 1) {
+      setIsSearchFilmNotFoundError(false);
+      setIsSearchFilmEmptyError(true);
+      return;
+    }
+    console.log(allMovies);
+    const res = allMovies.filter((movie) =>
+      JSON.stringify(movie).includes(searchString)
+    );
+    if (res.length < 1) {
+      setIsSearchFilmEmptyError(false);
+      setMoviesSearched([]);
+      setIsSearchFilmNotFoundError(true);
+      return;
+    }
+    setIsSearchFilmEmptyError(false);
+    setIsSearchFilmNotFoundError(false);
+    setMoviesSearched(res);
+  }
 
   return (
     <Switch>
-      <ProtectedRoute exact path={routes.movies} loggedIn={isLogged}>
+      <ProtectedRoute exact path={routes.movies} loggedIn={isLogin}>
         <>
           <Header
-            isLogged={isLogged}
-            open={open}
-            setOpen={setOpen}
+            isLogin={isLogin}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
             onLogoutProfile={logoutUserProfile}
           />
-          <Movies movies={movies} onSearchSubmit={searchMovie} />
+          <Movies
+            movies={moviesSearched}
+            onSearchSubmit={searchMovie}
+            searchFormEmptyErrorText={searchFormEmptyErrorText}
+            searchFormNotFoundErrorText={searchFormNotFoundErrorText}
+            isSearchFilmEmptyError={isSearchFilmEmptyError}
+            isSearchFilmNotFoundError={isSearchFilmNotFoundError}
+          />
           <Footer />
         </>
       </ProtectedRoute>
-      <ProtectedRoute exact path={routes.savedMovies} loggedIn={isLogged}>
+      <ProtectedRoute exact path={routes.savedMovies} loggedIn={isLogin}>
         <>
           <Header
-            isLogged={isLogged}
-            open={open}
-            setOpen={setOpen}
+            isLogin={isLogin}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
             onLogoutProfile={logoutUserProfile}
           />
           <SavedMovies movies={savedMovies} />
           <Footer />
         </>
       </ProtectedRoute>
-      <ProtectedRoute exact path={routes.profile} loggedIn={isLogged}>
+      <ProtectedRoute exact path={routes.profile} loggedIn={isLogin}>
         <>
           <Header
-            isLogged={isLogged}
-            open={open}
-            setOpen={setOpen}
+            isLogin={isLogin}
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
             onLogoutProfile={logoutUserProfile}
           />
           <Profile userData={currentUser} onLogout={logoutUserProfile} />
         </>
       </ProtectedRoute>
       <Route exact path={routes.baseRoute}>
-        <Header isLogged={isLogged} />
+        <Header isLogin={isLogin} />
         <Main />
         <Footer />
       </Route>

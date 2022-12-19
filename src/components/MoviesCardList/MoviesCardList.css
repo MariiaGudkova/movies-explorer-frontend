@@ -52,12 +52,13 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 885px) {
   .movies {
     margin: 0 30px 100px 30px;
   }
 
   .movies__list {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 342px));
     column-gap: 24px;
     row-gap: 35px;
     margin-bottom: 80px;
