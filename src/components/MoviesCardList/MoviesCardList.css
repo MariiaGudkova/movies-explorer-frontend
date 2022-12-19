@@ -6,13 +6,14 @@
 
 .movies__list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 500px));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 360px));
   column-gap: 28px;
   row-gap: 31.5px;
   padding: 0;
   margin: 0;
   margin-bottom: 60px;
   list-style: none;
+  justify-content: center;
 }
 
 .movies__button {
