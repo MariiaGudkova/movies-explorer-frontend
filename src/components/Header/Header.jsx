@@ -8,22 +8,22 @@ import NavTab from "../NavTab/NavTab";
 import { routes } from "../../utils/routes";
 
 function Header(props) {
-  const { isLogged, open, setOpen, onLogoutProfile } = props;
-  const close = () => setOpen(false);
+  const { isLogin, isOpen, setIsOpen, onLogoutProfile } = props;
+  const close = () => setIsOpen(false);
   const logout = () => onLogoutProfile();
   const location = useLocation();
 
   function onClick() {
-    return setOpen(!open);
+    return setIsOpen(!isOpen);
   }
 
-  return ({ isLogged } && location.pathname === routes.movies) ||
+  return ({ isLogin } && location.pathname === routes.movies) ||
     location.pathname === routes.savedMovies ||
     location.pathname === routes.profile ? (
     <header className="header-centering">
       <div
         className={
-          !open ? "header-overlay" : "header-overlay header-overlay_active "
+          !isOpen ? "header-overlay" : "header-overlay header-overlay_active "
         }
       />
       <div className="header">
@@ -36,12 +36,12 @@ function Header(props) {
               onClick={logout}
             />
           </Link>
-          <Navigation open={open} onClick={onClick} />
+          <Navigation open={isOpen} onClick={onClick} />
         </div>
         <Link
           to={routes.profile}
           className={
-            !open ? "header__button" : "header__button header__button_active"
+            !isOpen ? "header__button" : "header__button header__button_active"
           }
           onClick={onClick}
         >
@@ -54,7 +54,7 @@ function Header(props) {
         </Link>
         <ul
           className={
-            !open ? "header__burger header__burger_active" : "header__burger"
+            !isOpen ? "header__burger header__burger_active" : "header__burger"
           }
           onClick={onClick}
         >
@@ -64,7 +64,7 @@ function Header(props) {
         </ul>
         <div
           className={
-            !open ? "header__menu" : "header__menu header__menu_active"
+            !isOpen ? "header__menu" : "header__menu header__menu_active"
           }
         >
           <ul className="header__cross" onClick={close}>
