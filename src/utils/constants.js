@@ -95,3 +95,5 @@ export const movies = [
     cover: cover12,isSaved: false,
   },
 ];
+
+export const BEATFILM_MOVIES_URL = "https://api.nomoreparties.co/beatfilm-movies";

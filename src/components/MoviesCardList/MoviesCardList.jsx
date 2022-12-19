@@ -10,7 +10,7 @@ function MoviesCardList(props) {
           return (
             <MoviesCard
               movie={movie}
-              key={movie._id}
+              key={movie.id}
               isPageSavedMovies={isPageSavedMovies}
             />
           );

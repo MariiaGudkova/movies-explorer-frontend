@@ -14,14 +14,22 @@ import Profile from "../Profile/Profile";
 import Register from "../Register/Register.jsx";
 import Login from "../Login/Login.jsx";
 import NotFound from "../NotFound/NotFound";
+import { getMovies } from "../../utils/MoviesApi.js";
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [isLogged, setIsLogged] = React.useState(false);
+  const [movies, setMovies] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const savedMovies = movies.filter((movie) => movie.isSaved === true);
   const emailRegex = /^\S+@\S+\.\S+$/;
   const history = useHistory();
+
+  React.useEffect(() => {
+    if (isLogged) {
+      getMoviesInfo();
+    }
+  }, [isLogged]);
 
   function handleRegistration(authData) {
     history.push(routes.signIn);
@@ -40,6 +48,17 @@ function App() {
     setCurrentUser({});
   }
 
+  async function getMoviesInfo() {
+    try {
+      const moviesInfo = await getMovies();
+      setMovies(moviesInfo);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  function searchMovie(name) {}
+
   return (
     <Switch>
       <ProtectedRoute exact path={routes.movies} loggedIn={isLogged}>
@@ -50,7 +69,7 @@ function App() {
             setOpen={setOpen}
             onLogoutProfile={logoutUserProfile}
           />
-          <Movies movies={movies} />
+          <Movies movies={movies} onSearchSubmit={searchMovie} />
           <Footer />
         </>
       </ProtectedRoute>
