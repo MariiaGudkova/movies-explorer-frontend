@@ -66,15 +66,16 @@ function App() {
   }
 
   function searchMovie(searchData) {
-    const { searchString } = searchData;
+    let { searchString } = searchData;
     if (!searchString || searchString.length < 1) {
       setIsSearchFilmNotFoundError(false);
       setIsSearchFilmEmptyError(true);
       return;
     }
     console.log(allMovies);
+    searchString = searchString.toLowerCase();
     const res = allMovies.filter((movie) =>
-      JSON.stringify(movie).includes(searchString)
+      JSON.stringify(movie).toLowerCase().includes(searchString)
     );
     if (res.length < 1) {
       setIsSearchFilmEmptyError(false);
