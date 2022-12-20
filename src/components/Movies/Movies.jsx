@@ -14,6 +14,7 @@ function Movies(props) {
     setIsSearchFilmEmptyError,
     isSearchFilmNotFoundError,
     setIsSearchFilmNotFoundError,
+    setIsChecked,
   } = props;
   return (
     <>
@@ -26,6 +27,7 @@ function Movies(props) {
           setIsSearchFilmEmptyError={setIsSearchFilmEmptyError}
           isSearchFilmNotFoundError={isSearchFilmNotFoundError}
           setIsSearchFilmNotFoundError={setIsSearchFilmNotFoundError}
+          setIsChecked={setIsChecked}
         />
         {isLoading ? <Preloader /> : <MoviesCardList movies={movies} />}
       </main>

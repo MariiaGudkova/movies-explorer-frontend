@@ -12,6 +12,7 @@ function SearchForm(props) {
     setIsSearchFilmEmptyError,
     isSearchFilmNotFoundError,
     setIsSearchFilmNotFoundError,
+    setIsChecked,
   } = props;
   const { values, handleChange } = useForm({});
   const isErrorShown = isSearchFilmEmptyError || isSearchFilmNotFoundError;
@@ -23,9 +24,9 @@ function SearchForm(props) {
   }
 
   function onChange(event) {
-    handleChange(event);
     setIsSearchFilmEmptyError(false);
     setIsSearchFilmNotFoundError(false);
+    handleChange(event);
   }
 
   function onSubmit(event) {
@@ -64,7 +65,7 @@ function SearchForm(props) {
           <button className="search__button" type="submit">
             <img className="search__logo" src={searchLoupe} alt="Loupe" />
           </button>
-          <FilterCheckbox />
+          <FilterCheckbox setIsChecked={setIsChecked} />
         </form>
       </div>
     </section>

@@ -30,6 +30,7 @@ function App() {
     React.useState(false);
   const [isSearchFilmNotFoundError, setIsSearchFilmNotFoundError] =
     React.useState(false);
+  const [isChecked, setIsChecked] = React.useState(false);
   const savedMovies = allMovies.filter((movie) => movie.isSaved === true);
   const emailRegex = /^\S+@\S+\.\S+$/;
   const history = useHistory();
@@ -80,8 +81,10 @@ function App() {
     }
     console.log(allMovies);
     searchString = searchString.toLowerCase();
-    const res = allMovies.filter((movie) =>
-      JSON.stringify(movie).toLowerCase().includes(searchString)
+    const res = allMovies.filter(
+      (movie) =>
+        JSON.stringify(movie).toLowerCase().includes(searchString) &&
+        (!isChecked || movie.duration <= 40)
     );
     if (res.length < 1) {
       setIsSearchFilmEmptyError(false);
@@ -120,6 +123,7 @@ function App() {
             setIsSearchFilmEmptyError={setIsSearchFilmEmptyError}
             isSearchFilmNotFoundError={isSearchFilmNotFoundError}
             setIsSearchFilmNotFoundError={setIsSearchFilmNotFoundError}
+            setIsChecked={setIsChecked}
           />
           <Footer />
         </>
