@@ -25,6 +25,7 @@ function App() {
   const [allMovies, setAllMovies] = React.useState([]);
   const [moviesSearched, setMoviesSearched] = React.useState([]);
   const [isOpen, setIsOpen] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
   const [isSearchFilmEmptyError, setIsSearchFilmEmptyError] =
     React.useState(false);
   const [isSearchFilmNotFoundError, setIsSearchFilmNotFoundError] =
@@ -66,10 +67,15 @@ function App() {
   }
 
   function searchMovie(searchData) {
+    setIsLoading(true);
     let { searchString } = searchData;
     if (!searchString || searchString.length < 1) {
       setIsSearchFilmNotFoundError(false);
-      setIsSearchFilmEmptyError(true);
+      setTimeout(() => {
+        setIsLoading(false);
+        setMoviesSearched([]);
+        setIsSearchFilmEmptyError(true);
+      }, 1000);
       return;
     }
     console.log(allMovies);
@@ -79,13 +85,19 @@ function App() {
     );
     if (res.length < 1) {
       setIsSearchFilmEmptyError(false);
-      setMoviesSearched([]);
-      setIsSearchFilmNotFoundError(true);
+      setTimeout(() => {
+        setIsLoading(false);
+        setMoviesSearched([]);
+        setIsSearchFilmNotFoundError(true);
+      }, 1000);
       return;
     }
     setIsSearchFilmEmptyError(false);
     setIsSearchFilmNotFoundError(false);
-    setMoviesSearched(res);
+    setTimeout(() => {
+      setIsLoading(false);
+      setMoviesSearched(res);
+    }, 1000);
   }
 
   return (
@@ -101,10 +113,13 @@ function App() {
           <Movies
             movies={moviesSearched}
             onSearchSubmit={searchMovie}
+            isLoading={isLoading}
             searchFormEmptyErrorText={searchFormEmptyErrorText}
             searchFormNotFoundErrorText={searchFormNotFoundErrorText}
             isSearchFilmEmptyError={isSearchFilmEmptyError}
+            setIsSearchFilmEmptyError={setIsSearchFilmEmptyError}
             isSearchFilmNotFoundError={isSearchFilmNotFoundError}
+            setIsSearchFilmNotFoundError={setIsSearchFilmNotFoundError}
           />
           <Footer />
         </>

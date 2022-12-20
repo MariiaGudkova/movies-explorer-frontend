@@ -9,7 +9,9 @@ function SearchForm(props) {
     searchFormEmptyErrorText,
     searchFormNotFoundErrorText,
     isSearchFilmEmptyError,
+    setIsSearchFilmEmptyError,
     isSearchFilmNotFoundError,
+    setIsSearchFilmNotFoundError,
   } = props;
   const { values, handleChange } = useForm({});
   const isErrorShown = isSearchFilmEmptyError || isSearchFilmNotFoundError;
@@ -18,6 +20,12 @@ function SearchForm(props) {
     errorMessage = searchFormEmptyErrorText;
   } else if (isSearchFilmNotFoundError) {
     errorMessage = searchFormNotFoundErrorText;
+  }
+
+  function onChange(event) {
+    handleChange(event);
+    setIsSearchFilmEmptyError(false);
+    setIsSearchFilmNotFoundError(false);
   }
 
   function onSubmit(event) {
@@ -42,7 +50,7 @@ function SearchForm(props) {
             type="text"
             placeholder="Фильм"
             required
-            onChange={handleChange}
+            onChange={onChange}
           />
           <span
             className={

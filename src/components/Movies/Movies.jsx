@@ -7,10 +7,13 @@ function Movies(props) {
   const {
     movies,
     onSearchSubmit,
+    isLoading,
     searchFormEmptyErrorText,
     searchFormNotFoundErrorText,
     isSearchFilmEmptyError,
+    setIsSearchFilmEmptyError,
     isSearchFilmNotFoundError,
+    setIsSearchFilmNotFoundError,
   } = props;
   return (
     <>
@@ -20,10 +23,11 @@ function Movies(props) {
           searchFormEmptyErrorText={searchFormEmptyErrorText}
           searchFormNotFoundErrorText={searchFormNotFoundErrorText}
           isSearchFilmEmptyError={isSearchFilmEmptyError}
+          setIsSearchFilmEmptyError={setIsSearchFilmEmptyError}
           isSearchFilmNotFoundError={isSearchFilmNotFoundError}
+          setIsSearchFilmNotFoundError={setIsSearchFilmNotFoundError}
         />
-        <MoviesCardList movies={movies} />
-        {/* <Preloader /> */}
+        {isLoading ? <Preloader /> : <MoviesCardList movies={movies} />}
       </main>
     </>
   );
