@@ -1,14 +1,16 @@
 import "./Login.css";
 import RegistrationForm from "../RegistrationForm/RegistrationForm.jsx";
 import { routes } from "../../utils/routes";
-import { useForm } from "../../hooks/useForm.js";
+import { useFormWithValidation } from "../../hooks/useFormWithValidation.js";
 
 function Login(props) {
-  const { emailRegex, onAthorizationSubmit } = props;
-  const { values, handleChange, setValues } = useForm({});
+  const { onAthorizationSubmit, emailRegex } = props;
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormWithValidation({});
   function handleSubmit(event) {
     event.preventDefault();
     onAthorizationSubmit(values);
+    resetForm();
   }
   return (
     <RegistrationForm
@@ -16,6 +18,7 @@ function Login(props) {
       name={"login-form"}
       buttonText={"Войти"}
       onSubmit={handleSubmit}
+      isValid={isValid}
       redirect={"login"}
       linkAdress={routes.signUp}
     >
@@ -31,10 +34,18 @@ function Login(props) {
         required
         minLength="6"
         maxLength="64"
-        mask={emailRegex}
+        pattern={emailRegex}
         onChange={handleChange}
       />
-      <span className="form__input-error email-input-error"></span>
+      <span
+        className={
+          isValid
+            ? "form__input-error"
+            : "form__input-error form__input-error_active"
+        }
+      >
+        {errors["email"]}
+      </span>
       <label className="form__input-label" htmlFor="password-login-input">
         Пароль
       </label>
@@ -50,8 +61,14 @@ function Login(props) {
         autoComplete="off"
         onChange={handleChange}
       />
-      <span className="form__input-error form__input-error_active  login-password-input-error">
-        Ошибка валидации
+      <span
+        className={
+          isValid
+            ? "form__input-error"
+            : "form__input-error form__input-error_active"
+        }
+      >
+        {errors["password"]}
       </span>
     </RegistrationForm>
   );

@@ -32,7 +32,8 @@ function App() {
     React.useState(false);
   const [isChecked, setIsChecked] = React.useState(false);
   const savedMovies = allMovies.filter((movie) => movie.isSaved === true);
-  const emailRegex = /^\S+@\S+\.\S+$/;
+  const nameRegex = "^[а-яА-ЯЁёa-zA-Z\\-\\s]+$";
+  const emailRegex = "^\\S+@\\S+\\.\\S+$";
   const history = useHistory();
 
   React.useEffect(() => {
@@ -157,10 +158,18 @@ function App() {
         <Footer />
       </Route>
       <Route exact path={routes.signUp}>
-        <Register onRegistrationSubmit={handleRegistration} />
+        <Register
+          onRegistrationSubmit={handleRegistration}
+          nameRegex={nameRegex}
+          emailRegex={emailRegex}
+        />
       </Route>
       <Route exact path={routes.signIn}>
-        <Login onAthorizationSubmit={hanldeAthorization} />
+        <Login
+          onAthorizationSubmit={hanldeAthorization}
+          nameRegex={nameRegex}
+          emailRegex={emailRegex}
+        />
       </Route>
       <Route exact path={routes.notFound}>
         <NotFound />

@@ -23,6 +23,10 @@
   color: #000000;
 }
 
+.form__input_error {
+  color: #ff4062;
+}
+
 .form__input:focus {
   outline: 2px inset rgba(0, 0, 0, 0.1);
 }
