@@ -149,7 +149,12 @@ function App() {
             setIsOpen={setIsOpen}
             onLogoutProfile={logoutUserProfile}
           />
-          <Profile userData={currentUser} onLogout={logoutUserProfile} />
+          <Profile
+            userData={currentUser}
+            nameRegex={nameRegex}
+            emailRegex={emailRegex}
+            onLogout={logoutUserProfile}
+          />
         </>
       </ProtectedRoute>
       <Route exact path={routes.baseRoute}>
