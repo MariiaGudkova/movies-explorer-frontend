@@ -26,7 +26,11 @@ function Login(props) {
         E-mail
       </label>
       <input
-        className="form__input form__input_email"
+        className={
+          !errors["email"]
+            ? "form__input form__input_email"
+            : "form__input form__input_error form__input_email"
+        }
         id="email-login-input"
         type="email"
         name="email"
@@ -50,7 +54,11 @@ function Login(props) {
         Пароль
       </label>
       <input
-        className="form__input form__input_password"
+        className={
+          !errors["password"]
+            ? "form__input form__input_password"
+            : "form__input form__input_error form__input_password"
+        }
         id="password-login-input"
         type="password"
         name="password"

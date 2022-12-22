@@ -27,7 +27,11 @@ function Register(props) {
         Имя
       </label>
       <input
-        className="form__input form__input_name"
+        className={
+          !errors["name"]
+            ? "form__input form__input_name"
+            : "form__input form__input_error form__input_name"
+        }
         id="name-register-input"
         type="text"
         name="name"
@@ -51,7 +55,11 @@ function Register(props) {
         E-mail
       </label>
       <input
-        className="form__input form__input_email"
+        className={
+          !errors["email"]
+            ? "form__input form__input_email"
+            : "form__input form__input_error form__input_email"
+        }
         id="email-register-input"
         type="email"
         name="email"
@@ -75,7 +83,11 @@ function Register(props) {
         Пароль
       </label>
       <input
-        className="form__input form__input_password"
+        className={
+          !errors["password"]
+            ? "form__input form__input_password"
+            : "form__input form__input_error form__input_password"
+        }
         id="password-register-input"
         type="password"
         name="password"
