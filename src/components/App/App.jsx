@@ -49,10 +49,11 @@ function App() {
     const response = await register(email, password, name);
     if (!response.data) {
       setServerErrorMessage(response.message);
+      return;
     }
-    if (response.data) {
-      history.push(routes.signIn);
-    }
+    setCurrentUser(authData);
+    setIsLogin(true);
+    history.push(routes.movies);
   }
 
   function hanldeAthorization(authData) {
