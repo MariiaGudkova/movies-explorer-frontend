@@ -3,7 +3,8 @@ import "./Profile.css";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation.js";
 
 function Profile(props) {
-  const { userData, nameRegex, emailRegex, onLogout } = props;
+  const { userData, nameRegex, emailRegex, onLogout, serverErrorMessage } =
+    props;
   let [isDisabled, setIsDisabled] = React.useState(true);
   let [isChangeButtons, setIsChangeButtons] = React.useState(true);
   let [isSavedButton, setIsSavedButton] = React.useState(false);
@@ -126,7 +127,7 @@ function Profile(props) {
             Выйти из аккаунта
           </button>
         </div>
-        <span className="profile-form__server-error"></span>
+        <span className="profile-form__server-error">{serverErrorMessage}</span>
         <button className={saveButtonClass} type="submit" disabled={!isValid}>
           Сохранить
         </button>

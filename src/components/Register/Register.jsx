@@ -4,7 +4,8 @@ import { routes } from "../../utils/routes";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation.js";
 
 function Register(props) {
-  const { onRegistrationSubmit, nameRegex, emailRegex } = props;
+  const { onRegistrationSubmit, nameRegex, emailRegex, serverErrorMessage } =
+    props;
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation({});
 
@@ -22,6 +23,7 @@ function Register(props) {
       isValid={isValid}
       redirect={"register"}
       linkAdress={routes.signIn}
+      serverErrorMessage={serverErrorMessage}
     >
       <label className="form__input-label" htmlFor="name-register-input">
         Имя

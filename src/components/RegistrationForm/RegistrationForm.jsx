@@ -14,6 +14,7 @@ function RegistrationForm(props) {
     onSubmit,
     isValid,
     children,
+    serverErrorMessage,
   } = props;
 
   const redirectText =
@@ -39,6 +40,7 @@ function RegistrationForm(props) {
         >
           <fieldset className="form__fieldset">
             {children}
+            <span className="form__server-error">{serverErrorMessage}</span>
             <button
               className={
                 isValid
