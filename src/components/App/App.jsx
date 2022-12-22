@@ -18,6 +18,7 @@ import {
   searchFormEmptyErrorText,
   searchFormNotFoundErrorText,
 } from "../../utils/constants.js";
+import { register } from "../../utils/MainApi.js";
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
@@ -31,6 +32,7 @@ function App() {
   const [isSearchFilmNotFoundError, setIsSearchFilmNotFoundError] =
     React.useState(false);
   const [isChecked, setIsChecked] = React.useState(false);
+  const [serverErrorMessage, setServerErrorMessage] = React.useState("");
   const savedMovies = allMovies.filter((movie) => movie.isSaved === true);
   const nameRegex = "^[а-яА-ЯЁёa-zA-Z\\-\\s]+$";
   const emailRegex = "^\\S+@\\S+\\.\\S+$";
@@ -42,8 +44,15 @@ function App() {
     }
   }, [isLogin]);
 
-  function handleRegistration(authData) {
-    history.push(routes.signIn);
+  async function handleRegistration(authData) {
+    const { email, password, name } = authData;
+    const response = await register(email, password, name);
+    if (!response.data) {
+      setServerErrorMessage(response.message);
+    }
+    if (response.data) {
+      history.push(routes.signIn);
+    }
   }
 
   function hanldeAthorization(authData) {
@@ -154,6 +163,7 @@ function App() {
             nameRegex={nameRegex}
             emailRegex={emailRegex}
             onLogout={logoutUserProfile}
+            serverErrorMessage={serverErrorMessage}
           />
         </>
       </ProtectedRoute>
@@ -167,6 +177,7 @@ function App() {
           onRegistrationSubmit={handleRegistration}
           nameRegex={nameRegex}
           emailRegex={emailRegex}
+          serverErrorMessage={serverErrorMessage}
         />
       </Route>
       <Route exact path={routes.signIn}>
@@ -174,6 +185,7 @@ function App() {
           onAthorizationSubmit={hanldeAthorization}
           nameRegex={nameRegex}
           emailRegex={emailRegex}
+          serverErrorMessage={serverErrorMessage}
         />
       </Route>
       <Route exact path={routes.notFound}>
