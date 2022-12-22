@@ -1,7 +1,7 @@
 import "./SearchForm.css";
 import searchLoupe from "../../images/search__logo.svg";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox.jsx";
-import { useForm } from "../../hooks/useForm.js";
+import { useFormWithValidation } from "../../hooks/useFormWithValidation.js";
 
 function SearchForm(props) {
   const {
@@ -14,7 +14,7 @@ function SearchForm(props) {
     setIsSearchFilmNotFoundError,
     setIsChecked,
   } = props;
-  const { values, handleChange } = useForm({});
+  const { values, handleChange } = useFormWithValidation({});
   const isErrorShown = isSearchFilmEmptyError || isSearchFilmNotFoundError;
   let errorMessage = "";
   if (isSearchFilmEmptyError) {
