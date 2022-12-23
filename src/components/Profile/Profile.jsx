@@ -17,7 +17,7 @@ function Profile(props) {
   let [isDisabled, setIsDisabled] = React.useState(true);
   let [isChangeButtons, setIsChangeButtons] = React.useState(true);
   let [isSavedButton, setIsSavedButton] = React.useState(false);
-  const { values, setValues, handleChange, errors, isValid, resetForm } =
+  const { values, setValues, handleChange, errors, isValid } =
     useFormWithValidation({});
   let saveButtonClass = isValid
     ? "profile-form__save-button"

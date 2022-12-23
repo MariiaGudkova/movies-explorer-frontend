@@ -42,5 +42,5 @@ export const updateUser = (jwt, email, name) => {
       Authorization: `Bearer ${jwt}`,
     },
     body: JSON.stringify({ email, name }),
-  }).then(this._getJsonOnError);
+  }).then((res) => res.json());
 };
