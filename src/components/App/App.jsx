@@ -18,7 +18,8 @@ import {
   searchFormEmptyErrorText,
   searchFormNotFoundErrorText,
 } from "../../utils/constants.js";
-import { register, login, getUser } from "../../utils/MainApi.js";
+import { register, login, getUser, updateUser } from "../../utils/MainApi.js";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
@@ -78,10 +79,25 @@ function App() {
   async function getUserInfo() {
     try {
       const jwt = localStorage.getItem("jwt");
-      const userInfo = await getUser(jwt);
-      setCurrentUser(userInfo.data);
+      const userData = await getUser(jwt);
+      setCurrentUser(userData.data);
     } catch (e) {
       console.error(e);
+    }
+  }
+
+  async function handleUpdateUser({ email, name }) {
+    try {
+      const jwt = localStorage.getItem("jwt");
+      setIsLoading(true);
+      const userData = await updateUser(jwt, email, name);
+      setCurrentUser(userData.data);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     }
   }
 
@@ -135,84 +151,87 @@ function App() {
   }
 
   return (
-    <Switch>
-      <ProtectedRoute exact path={routes.movies} loggedIn={isLogin}>
-        <>
-          <Header
-            isLogin={isLogin}
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            onLogoutProfile={logoutUserProfile}
-          />
-          <Movies
-            movies={moviesSearched}
-            onSearchSubmit={searchMovie}
-            isLoading={isLoading}
-            searchFormEmptyErrorText={searchFormEmptyErrorText}
-            searchFormNotFoundErrorText={searchFormNotFoundErrorText}
-            isSearchFilmEmptyError={isSearchFilmEmptyError}
-            setIsSearchFilmEmptyError={setIsSearchFilmEmptyError}
-            isSearchFilmNotFoundError={isSearchFilmNotFoundError}
-            setIsSearchFilmNotFoundError={setIsSearchFilmNotFoundError}
-            setIsChecked={setIsChecked}
-          />
+    <CurrentUserContext.Provider value={currentUser}>
+      <Switch>
+        <ProtectedRoute exact path={routes.movies} loggedIn={isLogin}>
+          <>
+            <Header
+              isLogin={isLogin}
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              onLogoutProfile={logoutUserProfile}
+            />
+            <Movies
+              movies={moviesSearched}
+              onSearchSubmit={searchMovie}
+              isLoading={isLoading}
+              searchFormEmptyErrorText={searchFormEmptyErrorText}
+              searchFormNotFoundErrorText={searchFormNotFoundErrorText}
+              isSearchFilmEmptyError={isSearchFilmEmptyError}
+              setIsSearchFilmEmptyError={setIsSearchFilmEmptyError}
+              isSearchFilmNotFoundError={isSearchFilmNotFoundError}
+              setIsSearchFilmNotFoundError={setIsSearchFilmNotFoundError}
+              setIsChecked={setIsChecked}
+            />
+            <Footer />
+          </>
+        </ProtectedRoute>
+        <ProtectedRoute exact path={routes.savedMovies} loggedIn={isLogin}>
+          <>
+            <Header
+              isLogin={isLogin}
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              onLogoutProfile={logoutUserProfile}
+            />
+            <SavedMovies movies={savedMovies} />
+            <Footer />
+          </>
+        </ProtectedRoute>
+        <ProtectedRoute exact path={routes.profile} loggedIn={isLogin}>
+          <>
+            <Header
+              isLogin={isLogin}
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+              onLogoutProfile={logoutUserProfile}
+            />
+            <Profile
+              nameRegex={nameRegex}
+              emailRegex={emailRegex}
+              onLogout={logoutUserProfile}
+              serverErrorMessage={serverErrorMessage}
+              isLoading={isLoading}
+              onUpdateUser={handleUpdateUser}
+            />
+          </>
+        </ProtectedRoute>
+        <Route exact path={routes.baseRoute}>
+          <Header isLogin={isLogin} />
+          <Main />
           <Footer />
-        </>
-      </ProtectedRoute>
-      <ProtectedRoute exact path={routes.savedMovies} loggedIn={isLogin}>
-        <>
-          <Header
-            isLogin={isLogin}
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            onLogoutProfile={logoutUserProfile}
-          />
-          <SavedMovies movies={savedMovies} />
-          <Footer />
-        </>
-      </ProtectedRoute>
-      <ProtectedRoute exact path={routes.profile} loggedIn={isLogin}>
-        <>
-          <Header
-            isLogin={isLogin}
-            isOpen={isOpen}
-            setIsOpen={setIsOpen}
-            onLogoutProfile={logoutUserProfile}
-          />
-          <Profile
-            userData={currentUser}
+        </Route>
+        <Route exact path={routes.signUp}>
+          <Register
+            onRegistrationSubmit={handleRegistration}
             nameRegex={nameRegex}
             emailRegex={emailRegex}
-            onLogout={logoutUserProfile}
             serverErrorMessage={serverErrorMessage}
           />
-        </>
-      </ProtectedRoute>
-      <Route exact path={routes.baseRoute}>
-        <Header isLogin={isLogin} />
-        <Main />
-        <Footer />
-      </Route>
-      <Route exact path={routes.signUp}>
-        <Register
-          onRegistrationSubmit={handleRegistration}
-          nameRegex={nameRegex}
-          emailRegex={emailRegex}
-          serverErrorMessage={serverErrorMessage}
-        />
-      </Route>
-      <Route exact path={routes.signIn}>
-        <Login
-          onLoginSubmit={hanldeLogin}
-          nameRegex={nameRegex}
-          emailRegex={emailRegex}
-          serverErrorMessage={serverErrorMessage}
-        />
-      </Route>
-      <Route exact path={routes.notFound}>
-        <NotFound />
-      </Route>
-    </Switch>
+        </Route>
+        <Route exact path={routes.signIn}>
+          <Login
+            onLoginSubmit={hanldeLogin}
+            nameRegex={nameRegex}
+            emailRegex={emailRegex}
+            serverErrorMessage={serverErrorMessage}
+          />
+        </Route>
+        <Route exact path={routes.notFound}>
+          <NotFound />
+        </Route>
+      </Switch>
+    </CurrentUserContext.Provider>
   );
 }
 
