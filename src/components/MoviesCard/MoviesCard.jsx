@@ -3,7 +3,7 @@ import checkMark from "../../images/checkmark.svg";
 import deleteIcon from "../../images/delete-icon.svg";
 
 function MoviesCard(props) {
-  const { movie, isPageSavedMovies } = props;
+  const { movie, isPageSavedMovies, onSaveMovie } = props;
   const { nameRU, duration, image, trailerLink } = movie;
   let saveButtonClassName = `movie__save-button ${
     movie.isSaved ? "movie__save-button_active" : ""
@@ -20,6 +20,14 @@ function MoviesCard(props) {
     saveButtonText = <img src={deleteIcon} alt="Cross" />;
   }
 
+  let imageSrc = isPageSavedMovies
+    ? image
+    : `https://api.nomoreparties.co/${image.url}`;
+
+  function onClick() {
+    onSaveMovie(movie);
+  }
+
   return (
     <li className="movie">
       <div className="movie__signature">
@@ -32,13 +40,9 @@ function MoviesCard(props) {
         target="_blank"
         rel="noreferrer"
       >
-        <img
-          className="movie__cover"
-          src={`https://api.nomoreparties.co/${image.url}`}
-          alt={nameRU}
-        />
+        <img className="movie__cover" src={imageSrc} alt={nameRU} />
       </a>
-      <button className={saveButtonClassName} type="button" onClick={() => {}}>
+      <button className={saveButtonClassName} type="button" onClick={onClick}>
         {saveButtonText}
       </button>
     </li>

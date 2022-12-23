@@ -18,7 +18,14 @@ import {
   searchFormEmptyErrorText,
   searchFormNotFoundErrorText,
 } from "../../utils/constants.js";
-import { register, login, getUser, updateUser } from "../../utils/MainApi.js";
+import {
+  register,
+  login,
+  getUser,
+  updateUser,
+  saveMovie,
+  getSavedMovies,
+} from "../../utils/MainApi.js";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 
 function App() {
@@ -26,6 +33,7 @@ function App() {
   const [isLogin, setIsLogin] = React.useState(false);
   const [allMovies, setAllMovies] = React.useState([]);
   const [moviesSearched, setMoviesSearched] = React.useState([]);
+  const [savedMovies, setSavedMovies] = React.useState([]);
   const [isOpen, setIsOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isSearchFilmEmptyError, setIsSearchFilmEmptyError] =
@@ -34,7 +42,9 @@ function App() {
     React.useState(false);
   const [isChecked, setIsChecked] = React.useState(false);
   const [serverErrorMessage, setServerErrorMessage] = React.useState("");
-  const savedMovies = allMovies.filter((movie) => movie.isSaved === true);
+  // const alreadySavedMovies = allMovies.filter(
+  //   (movie) => movie.isSaved === true
+  // );
   const nameRegex = "^[а-яА-ЯЁёa-zA-Z\\-\\s]+$";
   const emailRegex = "^\\S+@\\S+\\.\\S+$";
   const history = useHistory();
@@ -43,6 +53,7 @@ function App() {
     if (isLogin) {
       getUserInfo();
       getMoviesInfo();
+      getSavedMoviesInfo();
     }
   }, [isLogin]);
 
@@ -110,7 +121,17 @@ function App() {
     }
   }
 
-  function searchMovie(searchData) {
+  async function getSavedMoviesInfo() {
+    try {
+      const jwt = localStorage.getItem("jwt");
+      const moviesInfo = await getSavedMovies(jwt, currentUser._id);
+      setSavedMovies(moviesInfo.data);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  function handleSearchMovie(searchData) {
     setIsLoading(true);
     let { searchString } = searchData;
     if (!searchString || searchString.length < 1) {
@@ -150,6 +171,21 @@ function App() {
     }, 1000);
   }
 
+  async function handleSaveMovie(movie) {
+    try {
+      const jwt = localStorage.getItem("jwt");
+      const { image } = movie;
+      const imageUrl = `https://api.nomoreparties.co/${image.url}`;
+      const thumbnail = `https://api.nomoreparties.co/${image.url}`;
+      const newMovie = { imageUrl, thumbnail, ...movie };
+
+      await saveMovie(jwt, newMovie);
+      getSavedMoviesInfo();
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Switch>
@@ -163,7 +199,7 @@ function App() {
             />
             <Movies
               movies={moviesSearched}
-              onSearchSubmit={searchMovie}
+              onSearchSubmit={handleSearchMovie}
               isLoading={isLoading}
               searchFormEmptyErrorText={searchFormEmptyErrorText}
               searchFormNotFoundErrorText={searchFormNotFoundErrorText}
@@ -172,6 +208,7 @@ function App() {
               isSearchFilmNotFoundError={isSearchFilmNotFoundError}
               setIsSearchFilmNotFoundError={setIsSearchFilmNotFoundError}
               setIsChecked={setIsChecked}
+              onSaveMovie={handleSaveMovie}
             />
             <Footer />
           </>

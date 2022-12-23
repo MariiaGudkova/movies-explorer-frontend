@@ -44,3 +44,29 @@ export const updateUser = (jwt, email, name) => {
     body: JSON.stringify({ email, name }),
   }).then((res) => res.json());
 };
+
+export const saveMovie = (jwt, {country, director, duration,
+  year, description, imageUrl, trailerLink,
+  thumbnail, id: movieId, nameRU, nameEN}) => {
+  return fetch(`${USERS_API_URL}/movies`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${jwt}`,
+    },
+    body: JSON.stringify({ country, director, duration,
+      year, description, imageUrl, trailerLink,
+      thumbnail, movieId, nameRU, nameEN }),
+  }).then((res) => res.json());
+};
+
+export const getSavedMovies = (jwt, user) => {
+  return fetch(`${USERS_API_URL}/movies`, {
+    method: "GET", 
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${jwt}`,
+    }}).then((res) => res.json());
+}
