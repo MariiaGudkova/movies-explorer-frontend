@@ -18,7 +18,7 @@ import {
   searchFormEmptyErrorText,
   searchFormNotFoundErrorText,
 } from "../../utils/constants.js";
-import { register } from "../../utils/MainApi.js";
+import { register, login, getUser } from "../../utils/MainApi.js";
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
@@ -40,6 +40,7 @@ function App() {
 
   React.useEffect(() => {
     if (isLogin) {
+      getUserInfo();
       getMoviesInfo();
     }
   }, [isLogin]);
@@ -51,22 +52,37 @@ function App() {
       setServerErrorMessage(response.message);
       return;
     }
-    setCurrentUser(authData);
     setIsLogin(true);
+    localStorage.setItem("jwt", response.token);
     history.push(routes.movies);
   }
 
-  function hanldeAthorization(authData) {
+  async function hanldeLogin(authData) {
     const { email, password } = authData;
-    setCurrentUser(authData);
+    const response = await login(email, password);
+    if (!response.token) {
+      setServerErrorMessage(response.message);
+      return;
+    }
     setIsLogin(true);
+    localStorage.setItem("jwt", response.token);
     history.push(routes.movies);
   }
 
   function logoutUserProfile() {
+    localStorage.removeItem("jwt");
     history.push(routes.signIn);
     setIsLogin(false);
-    setCurrentUser({});
+  }
+
+  async function getUserInfo() {
+    try {
+      const jwt = localStorage.getItem("jwt");
+      const userInfo = await getUser(jwt);
+      setCurrentUser(userInfo);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async function getMoviesInfo() {
@@ -94,8 +110,12 @@ function App() {
     searchString = searchString.toLowerCase();
     const res = allMovies.filter(
       (movie) =>
-        JSON.stringify(movie).toLowerCase().includes(searchString) &&
-        (!isChecked || movie.duration <= 40)
+        movie.nameRU.toLowerCase().includes(searchString) ||
+        movie.nameEN.toLowerCase().includes(searchString) ||
+        movie.country.toLowerCase().includes(searchString) ||
+        movie.director.toLowerCase().includes(searchString) ||
+        (movie.year.toLowerCase().includes(searchString) &&
+          (!isChecked || movie.duration <= 40))
     );
     if (res.length < 1) {
       setIsSearchFilmEmptyError(false);
@@ -183,7 +203,7 @@ function App() {
       </Route>
       <Route exact path={routes.signIn}>
         <Login
-          onAthorizationSubmit={hanldeAthorization}
+          onLoginSubmit={hanldeLogin}
           nameRegex={nameRegex}
           emailRegex={emailRegex}
           serverErrorMessage={serverErrorMessage}
