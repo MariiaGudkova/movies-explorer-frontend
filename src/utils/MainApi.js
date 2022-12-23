@@ -32,3 +32,15 @@ export const getUser = (jwt) => {
     },
   }).then((res) => res.json());
 };
+
+export const updateUser = (jwt, email, name) => {
+  return fetch(`${USERS_API_URL}/users/me`, {
+    method: "PATCH",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${jwt}`,
+    },
+    body: JSON.stringify({ email, name }),
+  }).then(this._getJsonOnError);
+};

@@ -1,10 +1,19 @@
 import React from "react";
 import "./Profile.css";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation.js";
+import Preloader from "../Preloader/Preloader.jsx";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 
 function Profile(props) {
-  const { userData, nameRegex, emailRegex, onLogout, serverErrorMessage } =
-    props;
+  const currentUser = React.useContext(CurrentUserContext);
+  const {
+    nameRegex,
+    emailRegex,
+    onLogout,
+    serverErrorMessage,
+    isLoading,
+    onUpdateUser,
+  } = props;
   let [isDisabled, setIsDisabled] = React.useState(true);
   let [isChangeButtons, setIsChangeButtons] = React.useState(true);
   let [isSavedButton, setIsSavedButton] = React.useState(false);
@@ -19,9 +28,10 @@ function Profile(props) {
       ? "profile-form__save-button_active"
       : "profile-form__save-button_active profile-form__save-button_disabled";
   }
+
   React.useEffect(() => {
-    setValues(userData);
-  }, [setValues, userData]);
+    setValues(currentUser);
+  }, [setValues, currentUser]);
 
   function onClick() {
     setIsDisabled(false);
@@ -29,10 +39,19 @@ function Profile(props) {
     setIsSavedButton(true);
   }
 
-  return (
+  function onSubmit(event) {
+    event.preventDefault();
+    onUpdateUser(values);
+    setIsSavedButton(false);
+    setIsChangeButtons(true);
+  }
+
+  return isLoading ? (
+    <Preloader />
+  ) : (
     <main className="profile">
-      <form className="profile-form">
-        <h1 className="profile-form__title">Привет, {userData.name}!</h1>
+      <form className="profile-form" onSubmit={onSubmit}>
+        <h1 className="profile-form__title">Привет, {currentUser.name}!</h1>
         <fieldset className="profile-form__fieldset">
           <div className="profile-form__container">
             <label className="profile-form__label" htmlFor="name-profile-input">
