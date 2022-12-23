@@ -4,12 +4,12 @@ import { routes } from "../../utils/routes";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation.js";
 
 function Login(props) {
-  const { onAthorizationSubmit, emailRegex, serverErrorMessage } = props;
+  const { onLoginSubmit, emailRegex, serverErrorMessage } = props;
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation({});
   function handleSubmit(event) {
     event.preventDefault();
-    onAthorizationSubmit(values);
+    onLoginSubmit(values);
     resetForm();
   }
   return (

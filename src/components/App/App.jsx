@@ -79,7 +79,7 @@ function App() {
     try {
       const jwt = localStorage.getItem("jwt");
       const userInfo = await getUser(jwt);
-      setCurrentUser(userInfo);
+      setCurrentUser(userInfo.data);
     } catch (e) {
       console.error(e);
     }
