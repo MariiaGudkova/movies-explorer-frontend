@@ -191,7 +191,6 @@ function App() {
     try {
       const jwt = localStorage.getItem("jwt");
       setIsLoading(true);
-      console.log(movie._id);
       await deleteMovie(jwt, movie._id);
       getSavedMoviesInfo();
     } catch (e) {
@@ -240,6 +239,7 @@ function App() {
             />
             <SavedMovies
               movies={savedMovies}
+              isLoading={isLoading}
               onDeleteMovie={handleDeleteMovie}
             />
             <Footer />
