@@ -18,9 +18,13 @@ function MoviesCardList(props) {
           );
         })}
       </ul>
-      <button className="movies__button" type="button" onClick={() => {}}>
-        Ещё
-      </button>
+      {!isPageSavedMovies ? (
+        <button className="movies__button" type="button" onClick={() => {}}>
+          Ещё
+        </button>
+      ) : (
+        ""
+      )}
     </section>
   );
 }
