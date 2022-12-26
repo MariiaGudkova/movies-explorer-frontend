@@ -2,7 +2,7 @@ import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard.jsx";
 
 function MoviesCardList(props) {
-  const { movies, isPageSavedMovies, onSaveMovie } = props;
+  const { movies, isPageSavedMovies, onSaveMovie, onDeleteMovie } = props;
   return (
     <section className="movies">
       <ul className="movies__list">
@@ -13,6 +13,7 @@ function MoviesCardList(props) {
               key={isPageSavedMovies ? movie._id : movie.id}
               isPageSavedMovies={isPageSavedMovies}
               onSaveMovie={onSaveMovie}
+              onDeleteMovie={onDeleteMovie}
             />
           );
         })}

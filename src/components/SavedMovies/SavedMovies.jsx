@@ -3,14 +3,18 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList.jsx";
 
 function SavedMovies(props) {
-  const { movies } = props;
+  const { movies, onDeleteMovie } = props;
   const isPageSavedMovies = true;
 
   return (
     <>
       <main className="main-container">
         <SearchForm />
-        <MoviesCardList movies={movies} isPageSavedMovies={isPageSavedMovies} />
+        <MoviesCardList
+          movies={movies}
+          isPageSavedMovies={isPageSavedMovies}
+          onDeleteMovie={onDeleteMovie}
+        />
       </main>
     </>
   );

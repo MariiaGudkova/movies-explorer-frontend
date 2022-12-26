@@ -70,3 +70,14 @@ export const getSavedMovies = (jwt, user) => {
       Authorization: `Bearer ${jwt}`,
     }}).then((res) => res.json());
 }
+
+export const deleteMovie = (jwt, _id) => {
+  return fetch(`${USERS_API_URL}/movies/${_id}`, {
+    method: "DELETE", 
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${jwt}`,
+    }}).then((res) => res.json());
+}
+

@@ -3,7 +3,7 @@ import checkMark from "../../images/checkmark.svg";
 import deleteIcon from "../../images/delete-icon.svg";
 
 function MoviesCard(props) {
-  const { movie, isPageSavedMovies, onSaveMovie } = props;
+  const { movie, isPageSavedMovies, onSaveMovie, onDeleteMovie } = props;
   const { nameRU, duration, image, trailerLink } = movie;
   let saveButtonClassName = `movie__save-button ${
     movie.isSaved ? "movie__save-button_active" : ""
@@ -25,7 +25,7 @@ function MoviesCard(props) {
     : `https://api.nomoreparties.co/${image.url}`;
 
   function onClick() {
-    onSaveMovie(movie);
+    isPageSavedMovies ? onDeleteMovie(movie) : onSaveMovie(movie);
   }
 
   return (

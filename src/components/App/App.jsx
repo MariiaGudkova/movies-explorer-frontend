@@ -25,6 +25,7 @@ import {
   updateUser,
   saveMovie,
   getSavedMovies,
+  deleteMovie,
 } from "../../utils/MainApi.js";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 
@@ -186,6 +187,22 @@ function App() {
     }
   }
 
+  async function handleDeleteMovie(movie) {
+    try {
+      const jwt = localStorage.getItem("jwt");
+      setIsLoading(true);
+      console.log(movie._id);
+      await deleteMovie(jwt, movie._id);
+      getSavedMoviesInfo();
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
+    }
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <Switch>
@@ -221,7 +238,10 @@ function App() {
               setIsOpen={setIsOpen}
               onLogoutProfile={logoutUserProfile}
             />
-            <SavedMovies movies={savedMovies} />
+            <SavedMovies
+              movies={savedMovies}
+              onDeleteMovie={handleDeleteMovie}
+            />
             <Footer />
           </>
         </ProtectedRoute>
