@@ -11,39 +11,48 @@ function Profile(props) {
     emailRegex,
     onLogout,
     serverErrorMessage,
+    serverSuccessMessage,
+    setServerSuccessMessage,
     isLoading,
     onUpdateUser,
   } = props;
-  let [isDisabled, setIsDisabled] = React.useState(true);
-  let [isChangeButtons, setIsChangeButtons] = React.useState(true);
-  let [isSavedButton, setIsSavedButton] = React.useState(false);
+  let [isEditMode, setisEditMode] = React.useState(false);
   const { values, setValues, handleChange, errors, isValid } =
     useFormWithValidation({});
-  let saveButtonClass = isValid
-    ? "profile-form__save-button"
-    : "profile-form__save-button profile-form__save-button_disabled";
 
-  if (isSavedButton) {
-    saveButtonClass = isValid
+  const saveButtonClass =
+    isEditMode && isValid
       ? "profile-form__save-button_active"
       : "profile-form__save-button_active profile-form__save-button_disabled";
-  }
+
+  const saveButton = isEditMode ? (
+    <button className={saveButtonClass} type="submit" disabled={!isValid}>
+      Сохранить
+    </button>
+  ) : null;
+
+  React.useEffect(() => {
+    if (serverSuccessMessage && serverSuccessMessage.length > 0) {
+      setTimeout(() => {
+        return setServerSuccessMessage("");
+      }, 3000);
+    }
+  }, [serverSuccessMessage, setServerSuccessMessage]);
 
   React.useEffect(() => {
     setValues(currentUser);
   }, [setValues, currentUser]);
 
-  function onClick() {
-    setIsDisabled(false);
-    setIsChangeButtons(false);
-    setIsSavedButton(true);
+  function onClickEditButton() {
+    setisEditMode(true);
   }
 
-  function onSubmit(event) {
+  async function onSubmit(event) {
     event.preventDefault();
-    onUpdateUser(values);
-    setIsSavedButton(false);
-    setIsChangeButtons(true);
+    const success = await onUpdateUser(values);
+    if (success) {
+      setisEditMode(false);
+    }
   }
 
   return isLoading ? (
@@ -71,7 +80,7 @@ function Profile(props) {
               minLength="2"
               maxLength="30"
               pattern={nameRegex}
-              disabled={isDisabled}
+              disabled={!isEditMode}
               onChange={handleChange}
             />
             <span
@@ -105,7 +114,7 @@ function Profile(props) {
               minLength="6"
               maxLength="64"
               pattern={emailRegex}
-              disabled={isDisabled}
+              disabled={!isEditMode}
               onChange={handleChange}
             />
             <span
@@ -121,16 +130,19 @@ function Profile(props) {
         </fieldset>
         <div
           className={
-            isChangeButtons
+            !isEditMode
               ? "profile-form__buttons_active"
               : "profile-form__buttons"
           }
         >
+          <span className="profile-form__server-succsess">
+            {serverSuccessMessage}
+          </span>
           <button
             className="profile-form__button profile-form__button_edit"
             type="button"
             onClick={() => {
-              onClick();
+              onClickEditButton();
             }}
           >
             Редактировать
@@ -146,9 +158,7 @@ function Profile(props) {
           </button>
         </div>
         <span className="profile-form__server-error">{serverErrorMessage}</span>
-        <button className={saveButtonClass} type="submit" disabled={!isValid}>
-          Сохранить
-        </button>
+        {saveButton}
       </form>
     </main>
   );
