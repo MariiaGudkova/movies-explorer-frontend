@@ -1,10 +1,18 @@
 import "./FilterCheckbox.css";
 
 function FilterCheckbox(props) {
-  const { setIsChecked } = props;
+  const {
+    setIsChecked,
+    isLocalStorageChecked,
+    setIsLocalStorageChecked,
+    isPageSavedMovies,
+  } = props;
 
   function onChange(e) {
     const val = e.target.checked;
+    if (!isPageSavedMovies) {
+      setIsLocalStorageChecked(val);
+    }
     return setIsChecked(val);
   }
   return (
@@ -13,6 +21,8 @@ function FilterCheckbox(props) {
         className="search__checkbox"
         type="checkbox"
         id="search-checkbox"
+        checked={!isPageSavedMovies ? isLocalStorageChecked : undefined}
+        value={isLocalStorageChecked}
         onChange={onChange}
       />
       <label className="search__checkbox-label" htmlFor="search-checkbox">

@@ -10,13 +10,17 @@ function Movies(props) {
     isLoading,
     searchFormEmptyErrorText,
     searchFormNotFoundErrorText,
-    isSearchFilmEmptyError,
-    setIsSearchFilmEmptyError,
-    isSearchFilmNotFoundError,
-    setIsSearchFilmNotFoundError,
+    isSearchMovieEmptyError,
+    setIsSearchMovieEmptyError,
+    isSearchMovieNotFoundError,
+    setIsSearchMovieNotFoundError,
     setIsChecked,
+    isSavedMoviesFilter,
+    setIsSavedMoviesFilter,
     onSaveMovie,
   } = props;
+  const isPageSavedMovies = false;
+
   return (
     <>
       <main className="main-container">
@@ -24,11 +28,14 @@ function Movies(props) {
           onSearchSubmit={onSearchSubmit}
           searchFormEmptyErrorText={searchFormEmptyErrorText}
           searchFormNotFoundErrorText={searchFormNotFoundErrorText}
-          isSearchFilmEmptyError={isSearchFilmEmptyError}
-          setIsSearchFilmEmptyError={setIsSearchFilmEmptyError}
-          isSearchFilmNotFoundError={isSearchFilmNotFoundError}
-          setIsSearchFilmNotFoundError={setIsSearchFilmNotFoundError}
+          isSearchMovieEmptyError={isSearchMovieEmptyError}
+          setIsSearchMovieEmptyError={setIsSearchMovieEmptyError}
+          isSearchMovieNotFoundError={isSearchMovieNotFoundError}
+          setIsSearchMovieNotFoundError={setIsSearchMovieNotFoundError}
           setIsChecked={setIsChecked}
+          isPageSavedMovies={isPageSavedMovies}
+          isSavedMoviesFilter={isSavedMoviesFilter}
+          setIsSavedMoviesFilter={setIsSavedMoviesFilter}
         />
         {isLoading ? (
           <Preloader />
