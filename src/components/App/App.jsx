@@ -5,11 +5,11 @@ import "./App.css";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import { routes } from "../../utils/routes.js";
 import Header from "../Header/Header.jsx";
+import Main from "../Main/Main.jsx";
+import Profile from "../Profile/Profile";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies.jsx";
-import Main from "../Main/Main.jsx";
 import Footer from "../Footer/Footer.jsx";
-import Profile from "../Profile/Profile";
 import Register from "../Register/Register.jsx";
 import Login from "../Login/Login.jsx";
 import NotFound from "../NotFound/NotFound";
@@ -32,23 +32,23 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [isLogin, setIsLogin] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isChecked, setIsChecked] = React.useState(false);
+  const [isSavedMoviesFilter, setIsSavedMoviesFilter] = React.useState(false);
+  const [isSearchMovieEmptyError, setIsSearchMovieEmptyError] =
+    React.useState(false);
+  const [isSearchMovieNotFoundError, setIsSearchMovieNotFoundError] =
+    React.useState(false);
   const [allMovies, setAllMovies] = React.useState([]);
   const [moviesSearched, setMoviesSearched] = React.useState([]);
   const [savedMovies, setSavedMovies] = React.useState([]);
-  const [isOpen, setIsOpen] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [isSearchFilmEmptyError, setIsSearchFilmEmptyError] =
-    React.useState(false);
-  const [isSearchFilmNotFoundError, setIsSearchFilmNotFoundError] =
-    React.useState(false);
-  const [isChecked, setIsChecked] = React.useState(false);
+  const [savedMoviesSearched, setSavedMoviesSearched] = React.useState([]);
   const [serverErrorMessage, setServerErrorMessage] = React.useState("");
-  // const alreadySavedMovies = allMovies.filter(
-  //   (movie) => movie.isSaved === true
-  // );
+  const [serverSuccessMessage, setServerSuccessMessage] = React.useState("");
+  const history = useHistory();
   const nameRegex = "^[а-яА-ЯЁёa-zA-Z\\-\\s]+$";
   const emailRegex = "^\\S+@\\S+\\.\\S+$";
-  const history = useHistory();
 
   React.useEffect(() => {
     if (isLogin) {
@@ -59,31 +59,41 @@ function App() {
   }, [isLogin]);
 
   async function handleRegistration(authData) {
-    const { email, password, name } = authData;
-    const response = await register(email, password, name);
-    if (!response.data) {
-      setServerErrorMessage(response.message);
-      return;
+    try {
+      const { email, password, name } = authData;
+      const response = await register(email, password, name);
+      if (!response.data) {
+        setServerErrorMessage(response.message);
+        return;
+      }
+      setIsLogin(true);
+      setServerErrorMessage(null);
+      localStorage.setItem("jwt", response.token);
+      history.push(routes.movies);
+    } catch (e) {
+      console.error(e);
     }
-    setIsLogin(true);
-    localStorage.setItem("jwt", response.token);
-    history.push(routes.movies);
   }
 
   async function hanldeLogin(authData) {
-    const { email, password } = authData;
-    const response = await login(email, password);
-    if (!response.token) {
-      setServerErrorMessage(response.message);
-      return;
+    try {
+      const { email, password } = authData;
+      const response = await login(email, password);
+      if (!response.token) {
+        setServerErrorMessage(response.message);
+        return;
+      }
+      setIsLogin(true);
+      setServerErrorMessage(null);
+      localStorage.setItem("jwt", response.token);
+      history.push(routes.movies);
+    } catch (e) {
+      console.error(e);
     }
-    setIsLogin(true);
-    localStorage.setItem("jwt", response.token);
-    history.push(routes.movies);
   }
 
   function logoutUserProfile() {
-    localStorage.removeItem("jwt");
+    localStorage.clear();
     history.push(routes.signIn);
     setIsLogin(false);
   }
@@ -103,7 +113,14 @@ function App() {
       const jwt = localStorage.getItem("jwt");
       setIsLoading(true);
       const userData = await updateUser(jwt, email, name);
+      if (!userData.data) {
+        setServerErrorMessage(userData.message);
+        return false;
+      }
       setCurrentUser(userData.data);
+      setServerSuccessMessage(userData.message);
+      setServerErrorMessage(null);
+      return true;
     } catch (e) {
       console.error(e);
     } finally {
@@ -136,39 +153,65 @@ function App() {
     setIsLoading(true);
     let { searchString } = searchData;
     if (!searchString || searchString.length < 1) {
-      setIsSearchFilmNotFoundError(false);
+      setIsSearchMovieNotFoundError(false);
       setTimeout(() => {
         setIsLoading(false);
         setMoviesSearched([]);
-        setIsSearchFilmEmptyError(true);
+        setIsSearchMovieEmptyError(true);
       }, 1000);
       return;
     }
-    console.log(allMovies);
     searchString = searchString.toLowerCase();
-    const res = allMovies.filter(
-      (movie) =>
-        movie.nameRU.toLowerCase().includes(searchString) ||
-        movie.nameEN.toLowerCase().includes(searchString) ||
-        movie.country.toLowerCase().includes(searchString) ||
-        movie.director.toLowerCase().includes(searchString) ||
-        (movie.year.toLowerCase().includes(searchString) &&
-          (!isChecked || movie.duration <= 40))
-    );
+    let res = !isSavedMoviesFilter
+      ? allMovies.filter(
+          (movie) =>
+            movie.nameRU.toLowerCase().includes(searchString) ||
+            movie.nameEN.toLowerCase().includes(searchString) ||
+            movie.country.toLowerCase().includes(searchString) ||
+            movie.director.toLowerCase().includes(searchString) ||
+            (movie.year.toLowerCase().includes(searchString) &&
+              (!isChecked || movie.duration <= 40))
+        )
+      : savedMovies.filter(
+          (movie) =>
+            movie.nameRU.toLowerCase().includes(searchString) ||
+            movie.nameEN.toLowerCase().includes(searchString) ||
+            movie.country.toLowerCase().includes(searchString) ||
+            movie.director.toLowerCase().includes(searchString) ||
+            (movie.year.toLowerCase().includes(searchString) &&
+              (!isChecked || movie.duration <= 40))
+        );
     if (res.length < 1) {
-      setIsSearchFilmEmptyError(false);
+      setIsSearchMovieEmptyError(false);
       setTimeout(() => {
         setIsLoading(false);
-        setMoviesSearched([]);
-        setIsSearchFilmNotFoundError(true);
+        !isSavedMoviesFilter
+          ? setMoviesSearched([])
+          : setSavedMoviesSearched([]);
+        setIsSearchMovieNotFoundError(true);
       }, 1000);
       return;
     }
-    setIsSearchFilmEmptyError(false);
-    setIsSearchFilmNotFoundError(false);
+    setIsSearchMovieEmptyError(false);
+    setIsSearchMovieNotFoundError(false);
     setTimeout(() => {
       setIsLoading(false);
-      setMoviesSearched(res);
+      if (!isSavedMoviesFilter) {
+        console.log(savedMovies);
+        const savedMoviesIds = savedMovies.map((movie) => movie.movieId);
+        res = res.map((movie) => ({
+          ...movie,
+          isSaved: savedMoviesIds.includes(movie.id),
+        }));
+      }
+
+      !isSavedMoviesFilter
+        ? setMoviesSearched(res)
+        : setSavedMoviesSearched(res);
+
+      if (!isSavedMoviesFilter) {
+        localStorage.setItem("movies", JSON.stringify(res));
+      }
     }, 1000);
   }
 
@@ -207,23 +250,20 @@ function App() {
       <Switch>
         <ProtectedRoute exact path={routes.movies} loggedIn={isLogin}>
           <>
-            <Header
-              isLogin={isLogin}
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-              onLogoutProfile={logoutUserProfile}
-            />
+            <Header isLogin={isLogin} isOpen={isOpen} setIsOpen={setIsOpen} />
             <Movies
               movies={moviesSearched}
               onSearchSubmit={handleSearchMovie}
               isLoading={isLoading}
               searchFormEmptyErrorText={searchFormEmptyErrorText}
               searchFormNotFoundErrorText={searchFormNotFoundErrorText}
-              isSearchFilmEmptyError={isSearchFilmEmptyError}
-              setIsSearchFilmEmptyError={setIsSearchFilmEmptyError}
-              isSearchFilmNotFoundError={isSearchFilmNotFoundError}
-              setIsSearchFilmNotFoundError={setIsSearchFilmNotFoundError}
+              isSearchMovieEmptyError={isSearchMovieEmptyError}
+              setIsSearchMovieEmptyError={setIsSearchMovieEmptyError}
+              isSearchMovieNotFoundError={isSearchMovieNotFoundError}
+              setIsSearchMovieNotFoundError={setIsSearchMovieNotFoundError}
               setIsChecked={setIsChecked}
+              isSavedMoviesFilter={isSavedMoviesFilter}
+              setIsSavedMoviesFilter={setIsSavedMoviesFilter}
               onSaveMovie={handleSaveMovie}
             />
             <Footer />
@@ -231,15 +271,20 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute exact path={routes.savedMovies} loggedIn={isLogin}>
           <>
-            <Header
-              isLogin={isLogin}
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-              onLogoutProfile={logoutUserProfile}
-            />
+            <Header isLogin={isLogin} isOpen={isOpen} setIsOpen={setIsOpen} />
             <SavedMovies
-              movies={savedMovies}
+              movies={isSavedMoviesFilter ? savedMoviesSearched : savedMovies}
+              onSearchSubmit={handleSearchMovie}
               isLoading={isLoading}
+              searchFormEmptyErrorText={searchFormEmptyErrorText}
+              searchFormNotFoundErrorText={searchFormNotFoundErrorText}
+              isSearchMovieEmptyError={isSearchMovieEmptyError}
+              setIsSearchMovieEmptyError={setIsSearchMovieEmptyError}
+              isSearchMovieNotFoundError={isSearchMovieNotFoundError}
+              setIsSearchMovieNotFoundError={setIsSearchMovieNotFoundError}
+              setIsChecked={setIsChecked}
+              isSavedMoviesFilter={isSavedMoviesFilter}
+              setIsSavedMoviesFilter={setIsSavedMoviesFilter}
               onDeleteMovie={handleDeleteMovie}
             />
             <Footer />
@@ -247,24 +292,22 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute exact path={routes.profile} loggedIn={isLogin}>
           <>
-            <Header
-              isLogin={isLogin}
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-              onLogoutProfile={logoutUserProfile}
-            />
+            <Header isLogin={isLogin} isOpen={isOpen} setIsOpen={setIsOpen} />
             <Profile
               nameRegex={nameRegex}
               emailRegex={emailRegex}
               onLogout={logoutUserProfile}
               serverErrorMessage={serverErrorMessage}
+              setServerErrorMessage={setServerErrorMessage}
+              serverSuccessMessage={serverSuccessMessage}
+              setServerSuccessMessage={setServerSuccessMessage}
               isLoading={isLoading}
               onUpdateUser={handleUpdateUser}
             />
           </>
         </ProtectedRoute>
         <Route exact path={routes.baseRoute}>
-          <Header isLogin={isLogin} />
+          <Header isLogin={isLogin} isOpen={isOpen} setIsOpen={setIsOpen} />
           <Main />
           <Footer />
         </Route>
