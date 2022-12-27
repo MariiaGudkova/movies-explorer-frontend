@@ -81,6 +81,7 @@
   text-align: center;
   -webkit-transition: opacity 0.5s ease-in;
   transition: opacity 0.5s ease-in;
+  cursor: pointer;
 }
 
 .form__button:hover {
