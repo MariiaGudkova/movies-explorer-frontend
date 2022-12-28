@@ -30,12 +30,20 @@
   color: rgba(0, 0, 0, 1);
   -webkit-transition: font-weight 0.5s ease-in;
   transition: font-weight 0.5s ease-in;
+  -webkit-transition: border 1s ease;
+  transition: border 1s ease;
 }
 
 .navigation__link:hover {
   font-weight: 500;
   -webkit-transition: font-weight 0.5s ease-out;
   transition: font-weight 0.5s ease-out;
+}
+
+.navigation__link_active {
+  border-bottom: 1.5px solid #e8e8e8;
+  -webkit-transition: border 1s ease;
+  transition: border 1s ease;
 }
 
 .navigation__link_indent {
@@ -83,6 +91,10 @@
 
   .navigation__link:hover {
     border-bottom: 1.5px solid black;
+  }
+
+  .navigation__link_active {
+    border-bottom: none;
   }
 
   .navigation__link_indent {
