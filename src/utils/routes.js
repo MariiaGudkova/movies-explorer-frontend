@@ -5,5 +5,5 @@ export const routes = {
   movies: '/movies',
   savedMovies: '/saved-movies',
   profile: '/profile',
-  notFound: '/not-found',
-};
+  notFound: '',
+}
