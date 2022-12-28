@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import "./App.css";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
 import { routes } from "../../utils/routes.js";
@@ -47,6 +47,7 @@ function App() {
   const [serverErrors, setServerErrors] = React.useState({});
   const [serverSuccessMessage, setServerSuccessMessage] = React.useState("");
   const history = useHistory();
+  const location = useLocation();
   const nameRegex = "^[а-яА-ЯЁёa-zA-Z\\-\\s]+$";
   const emailRegex = "^\\S+@\\S+\\.\\S+$";
 
@@ -57,6 +58,10 @@ function App() {
       getSavedMoviesInfo();
     }
   }, [isLogin]);
+
+  React.useEffect(() => {
+    tokenCheck();
+  }, []);
 
   async function handleRegistration(authData) {
     try {
@@ -96,6 +101,24 @@ function App() {
     localStorage.clear();
     history.push(routes.signIn);
     setIsLogin(false);
+  }
+
+  function tokenCheck() {
+    const prevPath = location.pathname;
+    console.log(prevPath);
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      getUser(jwt)
+        .then((res) => {
+          if (res) {
+            setIsLogin(true);
+            history.push(prevPath);
+          }
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
   }
 
   async function getUserInfo() {
