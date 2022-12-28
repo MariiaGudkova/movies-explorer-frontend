@@ -10,7 +10,7 @@ function Profile(props) {
     nameRegex,
     emailRegex,
     onLogout,
-    serverErrorMessage,
+    serverError,
     serverSuccessMessage,
     setServerSuccessMessage,
     isLoading,
@@ -157,7 +157,7 @@ function Profile(props) {
             Выйти из аккаунта
           </button>
         </div>
-        <span className="profile-form__server-error">{serverErrorMessage}</span>
+        <span className="profile-form__server-error">{serverError}</span>
         {saveButton}
       </form>
     </main>

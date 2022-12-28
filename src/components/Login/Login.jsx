@@ -4,7 +4,7 @@ import { routes } from "../../utils/routes";
 import { useFormWithValidation } from "../../hooks/useFormWithValidation.js";
 
 function Login(props) {
-  const { onLoginSubmit, emailRegex, serverErrorMessage } = props;
+  const { onLoginSubmit, emailRegex, serverError } = props;
   const { values, handleChange, errors, isValid, resetForm } =
     useFormWithValidation({});
   function handleSubmit(event) {
@@ -21,7 +21,7 @@ function Login(props) {
       isValid={isValid}
       redirect={"login"}
       linkAdress={routes.signUp}
-      serverErrorMessage={serverErrorMessage}
+      serverError={serverError}
     >
       <label className="form__input-label" htmlFor="email-login-input">
         E-mail

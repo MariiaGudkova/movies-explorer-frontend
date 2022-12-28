@@ -44,7 +44,7 @@ function App() {
   const [moviesSearched, setMoviesSearched] = React.useState([]);
   const [savedMovies, setSavedMovies] = React.useState([]);
   const [savedMoviesSearched, setSavedMoviesSearched] = React.useState([]);
-  const [serverErrorMessage, setServerErrorMessage] = React.useState("");
+  const [serverErrors, setServerErrors] = React.useState({});
   const [serverSuccessMessage, setServerSuccessMessage] = React.useState("");
   const history = useHistory();
   const nameRegex = "^[а-яА-ЯЁёa-zA-Z\\-\\s]+$";
@@ -63,11 +63,11 @@ function App() {
       const { email, password, name } = authData;
       const response = await register(email, password, name);
       if (!response.data) {
-        setServerErrorMessage(response.message);
+        setServerErrors({ ...serverErrors, registration: response.message });
         return;
       }
       setIsLogin(true);
-      setServerErrorMessage(null);
+      setServerErrors({ ...serverErrors, registration: null });
       localStorage.setItem("jwt", response.token);
       history.push(routes.movies);
     } catch (e) {
@@ -80,11 +80,11 @@ function App() {
       const { email, password } = authData;
       const response = await login(email, password);
       if (!response.token) {
-        setServerErrorMessage(response.message);
+        setServerErrors({ ...serverErrors, login: response.message });
         return;
       }
       setIsLogin(true);
-      setServerErrorMessage(null);
+      setServerErrors({ ...serverErrors, login: null });
       localStorage.setItem("jwt", response.token);
       history.push(routes.movies);
     } catch (e) {
@@ -112,14 +112,14 @@ function App() {
     try {
       const jwt = localStorage.getItem("jwt");
       setIsLoading(true);
-      const userData = await updateUser(jwt, email, name);
-      if (!userData.data) {
-        setServerErrorMessage(userData.message);
+      const response = await updateUser(jwt, email, name);
+      if (!response.data) {
+        setServerErrors({ ...serverErrors, profile: response.message });
         return false;
       }
-      setCurrentUser(userData.data);
-      setServerSuccessMessage(userData.message);
-      setServerErrorMessage(null);
+      setCurrentUser(response.data);
+      setServerSuccessMessage(response.message);
+      setServerErrors({ ...serverErrors, profile: null });
       return true;
     } catch (e) {
       console.error(e);
@@ -297,8 +297,7 @@ function App() {
               nameRegex={nameRegex}
               emailRegex={emailRegex}
               onLogout={logoutUserProfile}
-              serverErrorMessage={serverErrorMessage}
-              setServerErrorMessage={setServerErrorMessage}
+              serverError={serverErrors.profile}
               serverSuccessMessage={serverSuccessMessage}
               setServerSuccessMessage={setServerSuccessMessage}
               isLoading={isLoading}
@@ -316,7 +315,7 @@ function App() {
             onRegistrationSubmit={handleRegistration}
             nameRegex={nameRegex}
             emailRegex={emailRegex}
-            serverErrorMessage={serverErrorMessage}
+            serverError={serverErrors.registration}
           />
         </Route>
         <Route exact path={routes.signIn}>
@@ -324,7 +323,7 @@ function App() {
             onLoginSubmit={hanldeLogin}
             nameRegex={nameRegex}
             emailRegex={emailRegex}
-            serverErrorMessage={serverErrorMessage}
+            serverError={serverErrors.login}
           />
         </Route>
         <Route exact path={routes.notFound}>
