@@ -20,13 +20,15 @@ function Profile(props) {
   const { values, setValues, handleChange, errors, isValid } =
     useFormWithValidation({});
 
-  const saveButtonClass =
-    isEditMode && isValid
-      ? "profile-form__save-button_active"
-      : "profile-form__save-button_active profile-form__save-button_disabled";
-
   const saveButton = isEditMode ? (
-    <button className={saveButtonClass} type="submit" disabled={!isValid}>
+    <button
+      className={"profile-form__save-button_active"}
+      type="submit"
+      disabled={
+        !isValid ||
+        (currentUser.name === values.name && currentUser.email === values.email)
+      }
+    >
       Сохранить
     </button>
   ) : null;

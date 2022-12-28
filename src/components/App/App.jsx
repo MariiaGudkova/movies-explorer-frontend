@@ -105,7 +105,6 @@ function App() {
 
   function tokenCheck() {
     const prevPath = location.pathname;
-    console.log(prevPath);
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
       getUser(jwt)

@@ -204,19 +204,16 @@
   cursor: pointer;
 }
 
-.profile-form__save-button:hover {
+.profile-form__save-button_active:disabled {
+  background: #f8f8f8;
+  color: #c2c2c2;
+  cursor: default;
+}
+
+.profile-form__save-button_active:hover {
   opacity: 0.8;
   -webkit-transition: opacity 0.5s ease-out;
   transition: opacity 0.5s ease-out;
-}
-
-.profile-form__save-button_disabled {
-  background: #f8f8f8;
-  color: #c2c2c2;
-}
-
-.profile-form__save-button_disabled:hover {
-  opacity: 1;
 }
 
 @media screen and (max-width: 768px) {
