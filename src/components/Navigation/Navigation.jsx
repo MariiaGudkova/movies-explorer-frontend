@@ -4,7 +4,7 @@ import "./Navigation.css";
 import { routes } from "../../utils/routes";
 
 function Navigation(props) {
-  const { open, onClick } = props;
+  const { isOpen, onClick } = props;
   const location = useLocation();
   const isMoviesActive = location.pathname === routes.movies;
   const isSavedMoviesActive = location.pathname === routes.savedMovies;
@@ -12,8 +12,33 @@ function Navigation(props) {
     onClick();
   }
 
+  React.useEffect(() => {
+    function closeByEscape(evt) {
+      if (evt.key === "Escape") {
+        onClick();
+      }
+    }
+
+    function closeByClickAnywhere(evt) {
+      const menu = document.querySelector(".header__menu_active");
+      const burger = document.querySelector(".header__burger");
+      if (evt.target !== menu && evt.target !== burger) {
+        onClick();
+      }
+    }
+
+    if (isOpen) {
+      document.addEventListener("keydown", closeByEscape);
+      document.addEventListener("click", closeByClickAnywhere);
+      return () => {
+        document.removeEventListener("keydown", closeByEscape);
+        document.removeEventListener("click", closeByClickAnywhere);
+      };
+    }
+  }, [isOpen, onClick]);
+
   return (
-    <nav className={!open ? "navigation" : "navigation navigation_active"}>
+    <nav className={!isOpen ? "navigation" : "navigation navigation_active"}>
       <ul className="navigation__list">
         <li className="navigation__item navigation__burger-item navigation__burger-item_active">
           <Link
