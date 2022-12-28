@@ -219,11 +219,16 @@ function App() {
     setTimeout(() => {
       setIsLoading(false);
       if (!isSavedMoviesFilter) {
-        console.log(savedMovies);
         const savedMoviesIds = savedMovies.map((movie) => movie.movieId);
         res = res.map((movie) => ({
           ...movie,
           isSaved: savedMoviesIds.includes(movie.id),
+          _id: savedMovies.reduce((id, item) => {
+            if (item.movieId === movie.id) {
+              return (id = item._id);
+            }
+            return id;
+          }, null),
         }));
       }
 
@@ -287,6 +292,7 @@ function App() {
               isSavedMoviesFilter={isSavedMoviesFilter}
               setIsSavedMoviesFilter={setIsSavedMoviesFilter}
               onSaveMovie={handleSaveMovie}
+              onDeleteMovie={handleDeleteMovie}
             />
             <Footer />
           </>

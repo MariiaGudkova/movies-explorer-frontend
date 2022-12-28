@@ -18,6 +18,7 @@ function Movies(props) {
     isSavedMoviesFilter,
     setIsSavedMoviesFilter,
     onSaveMovie,
+    onDeleteMovie,
   } = props;
   const isPageSavedMovies = false;
 
@@ -40,7 +41,11 @@ function Movies(props) {
         {isLoading ? (
           <Preloader />
         ) : (
-          <MoviesCardList movies={movies} onSaveMovie={onSaveMovie} />
+          <MoviesCardList
+            movies={movies}
+            onSaveMovie={onSaveMovie}
+            onDeleteMovie={onDeleteMovie}
+          />
         )}
       </main>
     </>

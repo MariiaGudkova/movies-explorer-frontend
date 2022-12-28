@@ -25,7 +25,9 @@ function MoviesCard(props) {
     : `https://api.nomoreparties.co/${image.url}`;
 
   function onClick() {
-    isPageSavedMovies ? onDeleteMovie(movie) : onSaveMovie(movie);
+    movie.isSaved || isPageSavedMovies
+      ? onDeleteMovie(movie)
+      : onSaveMovie(movie);
   }
 
   return (
