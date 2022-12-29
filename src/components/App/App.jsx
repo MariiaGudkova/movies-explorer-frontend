@@ -223,12 +223,8 @@ function App() {
         res = res.map((movie) => ({
           ...movie,
           isSaved: savedMoviesIds.includes(movie.id),
-          _id: savedMovies.reduce((id, item) => {
-            if (item.movieId === movie.id) {
-              return (id = item._id);
-            }
-            return id;
-          }, null),
+          _id: savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
+            ?._id,
         }));
       }
 
@@ -244,16 +240,29 @@ function App() {
 
   async function handleSaveMovie(movie) {
     try {
+      setIsLoading(true);
       const jwt = localStorage.getItem("jwt");
       const { image } = movie;
       const imageUrl = `https://api.nomoreparties.co/${image.url}`;
       const thumbnail = `https://api.nomoreparties.co/${image.url}`;
       const newMovie = { imageUrl, thumbnail, ...movie };
 
-      await saveMovie(jwt, newMovie);
+      const savedMovie = await saveMovie(jwt, newMovie);
+      const updatedMovies = moviesSearched.map((item) => {
+        if (item.id === savedMovie.data.movieId) {
+          item.isSaved = true;
+          item._id = savedMovie.data._id;
+        }
+        return item;
+      });
+      setMoviesSearched(updatedMovies);
       getSavedMoviesInfo();
     } catch (e) {
       console.error(e);
+    } finally {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 1000);
     }
   }
 
@@ -263,6 +272,14 @@ function App() {
       setIsLoading(true);
       await deleteMovie(jwt, movie._id);
       getSavedMoviesInfo();
+      const updatedMovies = moviesSearched.map((item) => {
+        if (item._id === movie._id) {
+          item.isSaved = false;
+          item._id = null;
+        }
+        return item;
+      });
+      setMoviesSearched(updatedMovies);
     } catch (e) {
       console.error(e);
     } finally {
