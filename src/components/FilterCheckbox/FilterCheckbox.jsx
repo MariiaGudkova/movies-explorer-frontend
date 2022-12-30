@@ -23,7 +23,7 @@ function FilterCheckbox(props) {
         className="search__checkbox"
         type="checkbox"
         id="search-checkbox"
-        checked={!isPageSavedMovies ? isLocalStorageChecked : undefined}
+        checked={!isPageSavedMovies ? isLocalStorageChecked : false}
         value={isLocalStorageChecked}
         onChange={onChange}
       />
