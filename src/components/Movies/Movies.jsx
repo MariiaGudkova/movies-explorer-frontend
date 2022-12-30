@@ -6,7 +6,6 @@ import Preloader from "../Preloader/Preloader.jsx";
 function Movies(props) {
   const {
     movies,
-    onSearchSubmit,
     isLoading,
     searchFormEmptyErrorText,
     searchFormNotFoundErrorText,
@@ -15,6 +14,7 @@ function Movies(props) {
     isSearchMovieNotFoundError,
     setIsSearchMovieNotFoundError,
     setIsChecked,
+    setSearchString,
     isSavedMoviesFilter,
     setIsSavedMoviesFilter,
     onSaveMovie,
@@ -26,7 +26,6 @@ function Movies(props) {
     <>
       <main className="main-container">
         <SearchForm
-          onSearchSubmit={onSearchSubmit}
           searchFormEmptyErrorText={searchFormEmptyErrorText}
           searchFormNotFoundErrorText={searchFormNotFoundErrorText}
           isSearchMovieEmptyError={isSearchMovieEmptyError}
@@ -34,6 +33,7 @@ function Movies(props) {
           isSearchMovieNotFoundError={isSearchMovieNotFoundError}
           setIsSearchMovieNotFoundError={setIsSearchMovieNotFoundError}
           setIsChecked={setIsChecked}
+          setSearchString={setSearchString}
           isPageSavedMovies={isPageSavedMovies}
           isSavedMoviesFilter={isSavedMoviesFilter}
           setIsSavedMoviesFilter={setIsSavedMoviesFilter}

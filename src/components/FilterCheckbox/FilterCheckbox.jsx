@@ -3,6 +3,7 @@ import "./FilterCheckbox.css";
 function FilterCheckbox(props) {
   const {
     setIsChecked,
+    setSearchString,
     isLocalStorageChecked,
     setIsLocalStorageChecked,
     isPageSavedMovies,
@@ -12,8 +13,9 @@ function FilterCheckbox(props) {
     const val = e.target.checked;
     if (!isPageSavedMovies) {
       setIsLocalStorageChecked(val);
+      setSearchString(localStorage.getItem("searchString").toLowerCase());
     }
-    return setIsChecked(val);
+    setIsChecked(val);
   }
   return (
     <div className="search__checkbox-container">

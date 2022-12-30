@@ -46,6 +46,7 @@ function App() {
   const [savedMoviesSearched, setSavedMoviesSearched] = React.useState([]);
   const [serverErrors, setServerErrors] = React.useState({});
   const [serverSuccessMessage, setServerSuccessMessage] = React.useState("");
+  const [searchString, setSearchString] = React.useState("");
   const history = useHistory();
   const location = useLocation();
   const nameRegex = "^[а-яА-ЯЁёa-zA-Z\\-\\s]+$";
@@ -62,6 +63,10 @@ function App() {
   React.useEffect(() => {
     tokenCheck();
   }, []);
+
+  React.useEffect(() => {
+    handleSearchMovie();
+  }, [isChecked, searchString]);
 
   async function handleRegistration(authData) {
     try {
@@ -171,9 +176,8 @@ function App() {
     }
   }
 
-  function handleSearchMovie(searchData) {
+  function handleSearchMovie() {
     setIsLoading(true);
-    let { searchString } = searchData;
     if (!searchString || searchString.length < 1) {
       setIsSearchMovieNotFoundError(false);
       setTimeout(() => {
@@ -183,7 +187,6 @@ function App() {
       }, 1000);
       return;
     }
-    searchString = searchString.toLowerCase();
     let res = !isSavedMoviesFilter
       ? allMovies.filter(
           (movie) =>
@@ -297,7 +300,6 @@ function App() {
             <Header isLogin={isLogin} isOpen={isOpen} setIsOpen={setIsOpen} />
             <Movies
               movies={moviesSearched}
-              onSearchSubmit={handleSearchMovie}
               isLoading={isLoading}
               searchFormEmptyErrorText={searchFormEmptyErrorText}
               searchFormNotFoundErrorText={searchFormNotFoundErrorText}
@@ -306,6 +308,7 @@ function App() {
               isSearchMovieNotFoundError={isSearchMovieNotFoundError}
               setIsSearchMovieNotFoundError={setIsSearchMovieNotFoundError}
               setIsChecked={setIsChecked}
+              setSearchString={setSearchString}
               isSavedMoviesFilter={isSavedMoviesFilter}
               setIsSavedMoviesFilter={setIsSavedMoviesFilter}
               onSaveMovie={handleSaveMovie}
@@ -319,7 +322,6 @@ function App() {
             <Header isLogin={isLogin} isOpen={isOpen} setIsOpen={setIsOpen} />
             <SavedMovies
               movies={isSavedMoviesFilter ? savedMoviesSearched : savedMovies}
-              onSearchSubmit={handleSearchMovie}
               isLoading={isLoading}
               searchFormEmptyErrorText={searchFormEmptyErrorText}
               searchFormNotFoundErrorText={searchFormNotFoundErrorText}
@@ -328,6 +330,7 @@ function App() {
               isSearchMovieNotFoundError={isSearchMovieNotFoundError}
               setIsSearchMovieNotFoundError={setIsSearchMovieNotFoundError}
               setIsChecked={setIsChecked}
+              setSearchString={setSearchString}
               isSavedMoviesFilter={isSavedMoviesFilter}
               setIsSavedMoviesFilter={setIsSavedMoviesFilter}
               onDeleteMovie={handleDeleteMovie}

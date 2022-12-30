@@ -7,7 +7,6 @@ import { useLocalStorage } from "../../hooks/useLocalStorageValues";
 
 function SearchForm(props) {
   const {
-    onSearchSubmit,
     searchFormEmptyErrorText,
     searchFormNotFoundErrorText,
     isSearchMovieEmptyError,
@@ -15,11 +14,12 @@ function SearchForm(props) {
     isSearchMovieNotFoundError,
     setIsSearchMovieNotFoundError,
     setIsChecked,
+    setSearchString,
     setIsSavedMoviesFilter,
     isPageSavedMovies,
   } = props;
-  const { values, handleChange } = useFormWithValidation({});
-  const [localStoragesearchText, setLocalStorageSearchText] = useLocalStorage(
+  const { handleChange } = useFormWithValidation({});
+  const [localStorageSearchText, setLocalStorageSearchText] = useLocalStorage(
     "searchString",
     ""
   );
@@ -27,6 +27,7 @@ function SearchForm(props) {
     "isChecked",
     false
   );
+
   const isErrorShown = isSearchMovieEmptyError || isSearchMovieNotFoundError;
   let errorMessage = "";
   if (isSearchMovieEmptyError) {
@@ -46,13 +47,14 @@ function SearchForm(props) {
 
   async function onSubmit(event) {
     event.preventDefault();
-    console.log(isPageSavedMovies);
     if (
       isPageSavedMovies
         ? setIsSavedMoviesFilter(true)
         : setIsSavedMoviesFilter(false)
     );
-    onSearchSubmit(values);
+    const form = document.querySelector(".search__form");
+    const input = form.querySelector(".search__input");
+    setSearchString(input.value.toLowerCase());
   }
 
   return (
@@ -72,7 +74,7 @@ function SearchForm(props) {
             type="text"
             placeholder="Фильм"
             required
-            value={!isPageSavedMovies ? localStoragesearchText : undefined}
+            value={!isPageSavedMovies ? localStorageSearchText : undefined}
             onChange={onChange}
           />
           <span
@@ -89,6 +91,7 @@ function SearchForm(props) {
           </button>
           <FilterCheckbox
             setIsChecked={setIsChecked}
+            setSearchString={setSearchString}
             isLocalStorageChecked={isLocalStorageChecked}
             setIsLocalStorageChecked={setIsLocalStorageChecked}
             isPageSavedMovies={isPageSavedMovies}
