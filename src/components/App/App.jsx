@@ -106,6 +106,9 @@ function App() {
     localStorage.clear();
     history.push(routes.signIn);
     setIsLogin(false);
+    setMoviesSearched([]);
+    setSearchString("");
+    setIsChecked(false);
   }
 
   function tokenCheck() {
@@ -177,6 +180,7 @@ function App() {
   }
 
   function handleSearchMovie() {
+    console.log(searchString);
     setIsLoading(true);
     if (!searchString || searchString.length < 1) {
       setIsSearchMovieNotFoundError(false);
@@ -206,6 +210,7 @@ function App() {
             (movie.year.toLowerCase().includes(searchString) &&
               (!isChecked || movie.duration <= 40))
         );
+    console.log(res);
     if (res.length < 1) {
       setIsSearchMovieEmptyError(false);
       setTimeout(() => {
@@ -329,6 +334,7 @@ function App() {
               setIsSearchMovieEmptyError={setIsSearchMovieEmptyError}
               isSearchMovieNotFoundError={isSearchMovieNotFoundError}
               setIsSearchMovieNotFoundError={setIsSearchMovieNotFoundError}
+              isChecked={isChecked}
               setIsChecked={setIsChecked}
               setSearchString={setSearchString}
               isSavedMoviesFilter={isSavedMoviesFilter}

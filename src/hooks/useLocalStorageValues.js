@@ -7,7 +7,7 @@ function getStorageValue(key, defaultValue) {
 }
 
 export const useLocalStorage = (key, defaultValue) => {
-  const [value, setValue] = useState(defaultValue);
+  const [value, setValue] = useState(getStorageValue(key, defaultValue));
 
   useEffect(() => {
     localStorage.setItem(key, value);

@@ -13,6 +13,7 @@ function SavedMovies(props) {
     setIsSearchMovieEmptyError,
     isSearchMovieNotFoundError,
     setIsSearchMovieNotFoundError,
+    isChecked,
     setIsChecked,
     setSearchString,
     isSavedMoviesFilter,
@@ -31,6 +32,7 @@ function SavedMovies(props) {
           setIsSearchMovieEmptyError={setIsSearchMovieEmptyError}
           isSearchMovieNotFoundError={isSearchMovieNotFoundError}
           setIsSearchMovieNotFoundError={setIsSearchMovieNotFoundError}
+          isChecked={isChecked}
           setIsChecked={setIsChecked}
           setSearchString={setSearchString}
           isSavedMoviesFilter={isSavedMoviesFilter}

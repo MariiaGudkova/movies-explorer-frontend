@@ -13,6 +13,7 @@ function SearchForm(props) {
     setIsSearchMovieEmptyError,
     isSearchMovieNotFoundError,
     setIsSearchMovieNotFoundError,
+    isChecked,
     setIsChecked,
     setSearchString,
     setIsSavedMoviesFilter,
@@ -90,6 +91,7 @@ function SearchForm(props) {
             <img className="search__logo" src={searchLoupe} alt="Loupe" />
           </button>
           <FilterCheckbox
+            isChecked={isChecked}
             setIsChecked={setIsChecked}
             setSearchString={setSearchString}
             isLocalStorageChecked={isLocalStorageChecked}
