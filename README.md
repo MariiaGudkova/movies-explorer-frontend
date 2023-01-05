@@ -19,7 +19,9 @@
 
 <a href="https://mariiagudkova.github.io/movies-explorer-frontend/" target="_blank">Сервис поиска фильмов</a>
 
-## Ссылка на макет Figma
+## Адреса
 
 - IP: 158.160.35.0
 - Домен фронтенда: https://movies-gudkova.nomoredomains.club
+
+## Видео
