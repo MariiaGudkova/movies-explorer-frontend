@@ -13,20 +13,7 @@ import Footer from "../Footer/Footer.jsx";
 import Register from "../Register/Register.jsx";
 import Login from "../Login/Login.jsx";
 import NotFound from "../NotFound/NotFound";
-import { getMovies } from "../../utils/MoviesApi.js";
-import {
-  searchFormEmptyErrorText,
-  searchFormNotFoundErrorText,
-} from "../../utils/constants.js";
-import {
-  register,
-  login,
-  getUser,
-  updateUser,
-  saveMovie,
-  getSavedMovies,
-  deleteMovie,
-} from "../../utils/MainApi.js";
+import { register, login, getUser, updateUser } from "../../utils/MainApi.js";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 
 function App() {
@@ -34,19 +21,8 @@ function App() {
   const [isLogin, setIsLogin] = React.useState(false);
   const [isOpen, setIsOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
-  const [isChecked, setIsChecked] = React.useState(false);
-  const [isSavedMoviesFilter, setIsSavedMoviesFilter] = React.useState(false);
-  const [isSearchMovieEmptyError, setIsSearchMovieEmptyError] =
-    React.useState(false);
-  const [isSearchMovieNotFoundError, setIsSearchMovieNotFoundError] =
-    React.useState(false);
-  const [allMovies, setAllMovies] = React.useState([]);
-  const [moviesSearched, setMoviesSearched] = React.useState([]);
-  const [savedMovies, setSavedMovies] = React.useState([]);
-  const [savedMoviesSearched, setSavedMoviesSearched] = React.useState([]);
   const [serverErrors, setServerErrors] = React.useState({});
   const [serverSuccessMessage, setServerSuccessMessage] = React.useState("");
-  const [searchString, setSearchString] = React.useState("");
   const history = useHistory();
   const location = useLocation();
   const nameRegex = "^[а-яА-ЯЁёa-zA-Z\\-\\s]+$";
@@ -55,18 +31,12 @@ function App() {
   React.useEffect(() => {
     if (isLogin) {
       getUserInfo();
-      getMoviesInfo();
-      getSavedMoviesInfo();
     }
   }, [isLogin]);
 
   React.useEffect(() => {
     tokenCheck();
   }, []);
-
-  React.useEffect(() => {
-    handleSearchMovie();
-  }, [isChecked, searchString]);
 
   async function handleRegistration(authData) {
     try {
@@ -106,9 +76,6 @@ function App() {
     localStorage.clear();
     history.push(routes.signIn);
     setIsLogin(false);
-    setMoviesSearched([]);
-    setSearchString("");
-    setIsChecked(false);
   }
 
   function tokenCheck() {
@@ -154,146 +121,7 @@ function App() {
     } catch (e) {
       console.error(e);
     } finally {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-    }
-  }
-
-  async function getMoviesInfo() {
-    try {
-      const moviesInfo = await getMovies();
-      setAllMovies(moviesInfo);
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  async function getSavedMoviesInfo() {
-    try {
-      const jwt = localStorage.getItem("jwt");
-      const moviesInfo = await getSavedMovies(jwt, currentUser._id);
-      setSavedMovies(moviesInfo.data);
-    } catch (e) {
-      console.error(e);
-    }
-  }
-
-  function handleSearchMovie() {
-    console.log(searchString);
-    setIsLoading(true);
-    if (!searchString || searchString.length < 1) {
-      setIsSearchMovieNotFoundError(false);
-      setTimeout(() => {
-        setIsLoading(false);
-        setMoviesSearched([]);
-        setIsSearchMovieEmptyError(true);
-      }, 1000);
-      return;
-    }
-    let res = !isSavedMoviesFilter
-      ? allMovies.filter(
-          (movie) =>
-            movie.nameRU.toLowerCase().includes(searchString) ||
-            movie.nameEN.toLowerCase().includes(searchString) ||
-            movie.country.toLowerCase().includes(searchString) ||
-            movie.director.toLowerCase().includes(searchString) ||
-            (movie.year.toLowerCase().includes(searchString) &&
-              (!isChecked || movie.duration <= 40))
-        )
-      : savedMovies.filter(
-          (movie) =>
-            movie.nameRU.toLowerCase().includes(searchString) ||
-            movie.nameEN.toLowerCase().includes(searchString) ||
-            movie.country.toLowerCase().includes(searchString) ||
-            movie.director.toLowerCase().includes(searchString) ||
-            (movie.year.toLowerCase().includes(searchString) &&
-              (!isChecked || movie.duration <= 40))
-        );
-    console.log(res);
-    if (res.length < 1) {
-      setIsSearchMovieEmptyError(false);
-      setTimeout(() => {
-        setIsLoading(false);
-        !isSavedMoviesFilter
-          ? setMoviesSearched([])
-          : setSavedMoviesSearched([]);
-        setIsSearchMovieNotFoundError(true);
-      }, 1000);
-      return;
-    }
-    setIsSearchMovieEmptyError(false);
-    setIsSearchMovieNotFoundError(false);
-    setTimeout(() => {
       setIsLoading(false);
-      if (!isSavedMoviesFilter) {
-        const savedMoviesIds = savedMovies.map((movie) => movie.movieId);
-        res = res.map((movie) => ({
-          ...movie,
-          isSaved: savedMoviesIds.includes(movie.id),
-          _id: savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)
-            ?._id,
-        }));
-      }
-
-      !isSavedMoviesFilter
-        ? setMoviesSearched(res)
-        : setSavedMoviesSearched(res);
-
-      if (!isSavedMoviesFilter) {
-        localStorage.setItem("movies", JSON.stringify(res));
-      }
-    }, 1000);
-  }
-
-  async function handleSaveMovie(movie) {
-    try {
-      setIsLoading(true);
-      const jwt = localStorage.getItem("jwt");
-      const { image } = movie;
-      const imageUrl = `https://api.nomoreparties.co/${image.url}`;
-      const thumbnail = `https://api.nomoreparties.co/${image.url}`;
-      const newMovie = { imageUrl, thumbnail, ...movie };
-
-      const savedMovie = await saveMovie(jwt, newMovie);
-      const updatedMovies = moviesSearched.map((item) => {
-        if (item.id === savedMovie.data.movieId) {
-          item.isSaved = true;
-          item._id = savedMovie.data._id;
-        }
-        return item;
-      });
-      setMoviesSearched(updatedMovies);
-      getSavedMoviesInfo();
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
-    }
-  }
-
-  async function handleDeleteMovie(movie) {
-    try {
-      const jwt = localStorage.getItem("jwt");
-      setIsLoading(true);
-      await deleteMovie(jwt, movie._id);
-      getSavedMoviesInfo();
-      const updatedMovies = moviesSearched.map((item) => {
-        if (item._id === movie._id) {
-          item.isSaved = false;
-          item._id = null;
-        }
-        return item;
-      });
-      setMoviesSearched(updatedMovies);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setTimeout(() => {
-        setIsLoading(false);
-      }, 1000);
     }
   }
 
@@ -303,44 +131,14 @@ function App() {
         <ProtectedRoute exact path={routes.movies} loggedIn={isLogin}>
           <>
             <Header isLogin={isLogin} isOpen={isOpen} setIsOpen={setIsOpen} />
-            <Movies
-              movies={moviesSearched}
-              isLoading={isLoading}
-              searchFormEmptyErrorText={searchFormEmptyErrorText}
-              searchFormNotFoundErrorText={searchFormNotFoundErrorText}
-              isSearchMovieEmptyError={isSearchMovieEmptyError}
-              setIsSearchMovieEmptyError={setIsSearchMovieEmptyError}
-              isSearchMovieNotFoundError={isSearchMovieNotFoundError}
-              setIsSearchMovieNotFoundError={setIsSearchMovieNotFoundError}
-              setIsChecked={setIsChecked}
-              setSearchString={setSearchString}
-              isSavedMoviesFilter={isSavedMoviesFilter}
-              setIsSavedMoviesFilter={setIsSavedMoviesFilter}
-              onSaveMovie={handleSaveMovie}
-              onDeleteMovie={handleDeleteMovie}
-            />
+            <Movies />
             <Footer />
           </>
         </ProtectedRoute>
         <ProtectedRoute exact path={routes.savedMovies} loggedIn={isLogin}>
           <>
             <Header isLogin={isLogin} isOpen={isOpen} setIsOpen={setIsOpen} />
-            <SavedMovies
-              movies={isSavedMoviesFilter ? savedMoviesSearched : savedMovies}
-              isLoading={isLoading}
-              searchFormEmptyErrorText={searchFormEmptyErrorText}
-              searchFormNotFoundErrorText={searchFormNotFoundErrorText}
-              isSearchMovieEmptyError={isSearchMovieEmptyError}
-              setIsSearchMovieEmptyError={setIsSearchMovieEmptyError}
-              isSearchMovieNotFoundError={isSearchMovieNotFoundError}
-              setIsSearchMovieNotFoundError={setIsSearchMovieNotFoundError}
-              isChecked={isChecked}
-              setIsChecked={setIsChecked}
-              setSearchString={setSearchString}
-              isSavedMoviesFilter={isSavedMoviesFilter}
-              setIsSavedMoviesFilter={setIsSavedMoviesFilter}
-              onDeleteMovie={handleDeleteMovie}
-            />
+            <SavedMovies />
             <Footer />
           </>
         </ProtectedRoute>
