@@ -5,7 +5,7 @@ import { useFormWithValidation } from "../../hooks/useFormWithValidation.js";
 
 function Login(props) {
   const { onLoginSubmit, emailRegex, serverError } = props;
-  const { values, handleChange, errors, isValid, resetForm } =
+  const { values, handleInputChange, errors, isValid, resetForm } =
     useFormWithValidation({});
   function handleSubmit(event) {
     event.preventDefault();
@@ -40,7 +40,7 @@ function Login(props) {
         minLength="6"
         maxLength="64"
         pattern={emailRegex}
-        onChange={handleChange}
+        onChange={handleInputChange}
       />
       <span
         className={
@@ -68,7 +68,7 @@ function Login(props) {
         minLength="6"
         maxLength="32"
         autoComplete="off"
-        onChange={handleChange}
+        onChange={handleInputChange}
       />
       <span
         className={
