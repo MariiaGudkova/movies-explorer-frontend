@@ -17,7 +17,7 @@ function Profile(props) {
     onUpdateUser,
   } = props;
   let [isEditMode, setisEditMode] = React.useState(false);
-  const { values, setValues, handleChange, errors, isValid } =
+  const { values, setValues, handleInputChange, errors, isValid } =
     useFormWithValidation({});
 
   const saveButton = isEditMode ? (
@@ -83,7 +83,7 @@ function Profile(props) {
               maxLength="30"
               pattern={nameRegex}
               disabled={!isEditMode}
-              onChange={handleChange}
+              onChange={handleInputChange}
             />
             <span
               className={
@@ -117,7 +117,7 @@ function Profile(props) {
               maxLength="64"
               pattern={emailRegex}
               disabled={!isEditMode}
-              onChange={handleChange}
+              onChange={handleInputChange}
             />
             <span
               className={
