@@ -15,11 +15,11 @@
 
 <a href='https://drive.google.com/drive/folders/16FHWqVzP8BmyJaFlp7pE1PnBGgC2NY_K?usp=sharing' target="_blank">Макет</a>
 
-## Ссылка на Github Pages <img src="https://media.giphy.com/media/6z00LdHYkOhw8WAUcA/giphy.gif" width="200px" height="200px">
+## Ссылка pull request
 
-<a href="https://mariiagudkova.github.io/movies-explorer-frontend/" target="_blank">Сервис поиска фильмов</a>
+<a href='https://github.com/MariiaGudkova/movies-explorer-frontend/pull/5'>
 
-## Адреса
+## Адреса <img src="https://media.giphy.com/media/6z00LdHYkOhw8WAUcA/giphy.gif" width="200px" height="200px">
 
 - IP: 158.160.35.0
 - Домен фронтенда: https://movies-gudkova.nomoredomains.club
