@@ -17,7 +17,7 @@
 
 ## Ссылка pull request
 
-<a href='https://github.com/MariiaGudkova/movies-explorer-frontend/pull/5'>
+<a href='https://github.com/MariiaGudkova/movies-explorer-frontend/pull/5' target="_blank">Ссылка</a>
 
 ## Адреса <img src="https://media.giphy.com/media/6z00LdHYkOhw8WAUcA/giphy.gif" width="200px" height="200px">
 
