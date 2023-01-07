@@ -27,6 +27,7 @@ function SavedMovies() {
       const jwt = localStorage.getItem("jwt");
       const { data: res } = await getSavedMoviesApi(jwt, currentUser._id);
       setSavedMovies(res);
+      setSearchedMovies(res);
     } catch (e) {
       setSearchError("PROCESSING_ERROR");
     }
@@ -52,7 +53,9 @@ function SavedMovies() {
       setSearchedMovies([]);
       console.error(e);
     } finally {
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 300);
     }
   };
 

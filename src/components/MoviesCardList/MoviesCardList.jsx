@@ -2,24 +2,33 @@ import React from "react";
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard.jsx";
 import { debounce } from "../../utils/debounce.js";
+import { cardsCount } from "../../utils/constants.js";
+import { cardsCountToAdd } from "../../utils/constants.js";
 
 function MoviesCardList(props) {
   const { movies, isPageSavedMovies, onSaveMovie, onDeleteMovie } = props;
   let [itemCount, setItemCount] = React.useState(0);
   let [itemsToAddCount, setItemsToAddCount] = React.useState(0);
+  const {
+    CARDS_COUNT_FOR_BIG_WINDOW_SIZE,
+    CARDS_COUNT_FOR_MIDDLE_WINDOW_SIZE,
+    CARDS_COUNT_FOR_SMALL_WINDOW_SIZE,
+  } = cardsCount;
+  const { CARDS_COUNT_TO_ADD_FOR_BIG_WINDOW_SIZE, DEFAULT_CARDS_COUNT_TO_ADD } =
+    cardsCountToAdd;
 
   React.useEffect(() => {
     function updateSize() {
       const size = window.innerWidth;
       if (size >= 769) {
-        setItemCount(12);
-        setItemsToAddCount(3);
+        setItemCount(CARDS_COUNT_FOR_BIG_WINDOW_SIZE);
+        setItemsToAddCount(CARDS_COUNT_TO_ADD_FOR_BIG_WINDOW_SIZE);
       } else if (size >= 481) {
-        setItemCount(8);
-        setItemsToAddCount(2);
+        setItemCount(CARDS_COUNT_FOR_MIDDLE_WINDOW_SIZE);
+        setItemsToAddCount(DEFAULT_CARDS_COUNT_TO_ADD);
       } else {
-        setItemCount(5);
-        setItemsToAddCount(2);
+        setItemCount(CARDS_COUNT_FOR_SMALL_WINDOW_SIZE);
+        setItemsToAddCount(DEFAULT_CARDS_COUNT_TO_ADD);
       }
     }
 

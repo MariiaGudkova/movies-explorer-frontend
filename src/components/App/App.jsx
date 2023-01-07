@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import { useHistory, useLocation } from "react-router-dom";
 import "./App.css";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.jsx";
+import ProtectedFromDoubleRegisterRoute from "../ProtectedFromDoubleRegisterRoute/ProtectedFromDoubleRegisterRoute.jsx";
 import { routes } from "../../utils/routes.js";
 import Header from "../Header/Header.jsx";
 import Main from "../Main/Main.jsx";
@@ -74,7 +75,7 @@ function App() {
 
   function logoutUserProfile() {
     localStorage.clear();
-    history.push(routes.signIn);
+    history.push(routes.baseRoute);
     setIsLogin(false);
   }
 
@@ -162,22 +163,30 @@ function App() {
           <Main />
           <Footer />
         </Route>
-        <Route exact path={routes.signUp}>
+        <ProtectedFromDoubleRegisterRoute
+          exact
+          path={routes.signUp}
+          loggedIn={isLogin}
+        >
           <Register
             onRegistrationSubmit={handleRegistration}
             nameRegex={nameRegex}
             emailRegex={emailRegex}
             serverError={serverErrors.registration}
           />
-        </Route>
-        <Route exact path={routes.signIn}>
+        </ProtectedFromDoubleRegisterRoute>
+        <ProtectedFromDoubleRegisterRoute
+          exact
+          path={routes.signIn}
+          loggedIn={isLogin}
+        >
           <Login
             onLoginSubmit={hanldeLogin}
             nameRegex={nameRegex}
             emailRegex={emailRegex}
             serverError={serverErrors.login}
           />
-        </Route>
+        </ProtectedFromDoubleRegisterRoute>
         <Route exact path={routes.notFound}>
           <NotFound />
         </Route>

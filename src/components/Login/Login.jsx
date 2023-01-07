@@ -5,13 +5,14 @@ import { useFormWithValidation } from "../../hooks/useFormWithValidation.js";
 
 function Login(props) {
   const { onLoginSubmit, emailRegex, serverError } = props;
-  const { values, handleInputChange, errors, isValid, resetForm } =
-    useFormWithValidation({});
+  const { values, handleInputChange, errors, isValid } = useFormWithValidation(
+    {}
+  );
   function handleSubmit(event) {
     event.preventDefault();
     onLoginSubmit(values);
-    resetForm();
   }
+
   return (
     <RegistrationForm
       title={"Рады видеть!"}
@@ -39,6 +40,7 @@ function Login(props) {
         required
         minLength="6"
         maxLength="64"
+        value={values.email || ""}
         pattern={emailRegex}
         onChange={handleInputChange}
       />
@@ -57,8 +59,8 @@ function Login(props) {
       <input
         className={
           !errors["password"]
-            ? "form__input form__input_password"
-            : "form__input form__input_error form__input_password"
+            ? "form__input form__input_password-login"
+            : "form__input form__input_error form__input_password-login"
         }
         id="password-login-input"
         type="password"
@@ -67,6 +69,7 @@ function Login(props) {
         required
         minLength="6"
         maxLength="32"
+        value={values.password || ""}
         autoComplete="off"
         onChange={handleInputChange}
       />

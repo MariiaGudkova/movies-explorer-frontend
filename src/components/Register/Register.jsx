@@ -5,13 +5,13 @@ import { useFormWithValidation } from "../../hooks/useFormWithValidation.js";
 
 function Register(props) {
   const { onRegistrationSubmit, nameRegex, emailRegex, serverError } = props;
-  const { values, handleInputChange, errors, isValid, resetForm } =
-    useFormWithValidation({});
+  const { values, handleInputChange, errors, isValid } = useFormWithValidation(
+    {}
+  );
 
   function handleSubmit(event) {
     event.preventDefault();
     onRegistrationSubmit(values);
-    resetForm();
   }
   return (
     <RegistrationForm
@@ -40,6 +40,7 @@ function Register(props) {
         required
         minLength="2"
         maxLength="30"
+        value={values.name || ""}
         pattern={nameRegex}
         onChange={handleInputChange}
       />
@@ -68,6 +69,7 @@ function Register(props) {
         required
         minLength="6"
         maxLength="64"
+        value={values.email || ""}
         pattern={emailRegex}
         onChange={handleInputChange}
       />
@@ -97,6 +99,7 @@ function Register(props) {
         minLength="6"
         maxLength="32"
         autoComplete="off"
+        value={values.password || ""}
         onChange={handleInputChange}
       />
       <span

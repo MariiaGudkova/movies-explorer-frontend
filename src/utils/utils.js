@@ -1,4 +1,5 @@
-const SHORT_FILM_LENGTH_MINUTES = 40;
+import {SHORT_FILM_LENGTH_MINUTES} from './constants.js';
+
 export function filterMovies(allMovies, searchStr, isShortFilm) {
   return allMovies.filter((movie) => {
     return [

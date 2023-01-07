@@ -62,7 +62,9 @@ function Movies() {
       setSearchedMovies([]);
       console.error(e);
     } finally {
-      setIsLoading(false);
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 300);
     }
   };
 
