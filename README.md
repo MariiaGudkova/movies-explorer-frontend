@@ -23,5 +23,6 @@
 ## Видео
 
 
-https://user-images.githubusercontent.com/101827457/211354868-517c16b1-46b8-4817-b02f-42ff70838a0e.mp4
+
+https://user-images.githubusercontent.com/101827457/211372708-50221e33-1959-43ea-a610-41fa7a3c011f.mp4
 
