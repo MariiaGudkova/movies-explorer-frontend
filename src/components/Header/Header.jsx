@@ -8,73 +8,91 @@ import NavTab from "../NavTab/NavTab";
 import { routes } from "../../utils/routes";
 
 function Header(props) {
-  const { isLogged, open, setOpen, onLogoutProfile } = props;
-  const close = () => setOpen(false);
-  const logout = () => onLogoutProfile();
+  const { isLogin, isOpen, setIsOpen } = props;
+  const close = () => setIsOpen(false);
   const location = useLocation();
 
   function onClick() {
-    return setOpen(!open);
+    return setIsOpen(!isOpen);
   }
 
-  return ({ isLogged } && location.pathname === routes.movies) ||
-    location.pathname === routes.savedMovies ||
-    location.pathname === routes.profile ? (
-    <header className="header-centering">
-      <div
+  if (isLogin)
+    return (
+      <header
         className={
-          !open ? "header-overlay" : "header-overlay header-overlay_active "
+          location.pathname !== routes.baseRoute
+            ? "header-centering"
+            : "header-centering header-centering_promo"
         }
-      />
-      <div className="header">
-        <div className="header__container">
-          <Link to={routes.baseRoute}>
-            <img
-              className="header__logo"
-              src={headerLogo}
-              alt="Logo"
-              onClick={logout}
-            />
-          </Link>
-          <Navigation open={open} onClick={onClick} />
-        </div>
-        <Link
-          to={routes.profile}
-          className={
-            !open ? "header__button" : "header__button header__button_active"
-          }
-          onClick={onClick}
-        >
-          <p className="header__button-text">Аккаунт</p>
-          <img
-            className="header__button-icon"
-            src={headerButtonIcon}
-            alt="Account icon"
+      >
+        <>
+          <div
+            className={
+              !isOpen
+                ? "header-overlay"
+                : "header-overlay header-overlay_active "
+            }
           />
-        </Link>
-        <ul
-          className={
-            !open ? "header__burger header__burger_active" : "header__burger"
-          }
-          onClick={onClick}
-        >
-          <li className="header__burger-line"></li>
-          <li className="header__burger-line"></li>
-          <li className="header__burger-line"></li>
-        </ul>
-        <div
-          className={
-            !open ? "header__menu" : "header__menu header__menu_active"
-          }
-        >
-          <ul className="header__cross" onClick={close}>
-            <li className="header__cross-line"></li>
-            <li className="header__cross-line"></li>
-          </ul>
-        </div>
-      </div>
-    </header>
-  ) : (
+          <div
+            className={
+              location.pathname !== routes.baseRoute
+                ? "header"
+                : "header header_promo"
+            }
+          >
+            <div className="header__container">
+              <Link to={routes.baseRoute}>
+                <img className="header__logo" src={headerLogo} alt="Logo" />
+              </Link>
+              <Navigation isOpen={isOpen} onClick={onClick} />
+            </div>
+            <Link
+              to={routes.profile}
+              className={
+                !isOpen
+                  ? "header__button"
+                  : "header__button header__button_active"
+              }
+              onClick={onClick}
+            >
+              <p className="header__button-text">Аккаунт</p>
+              <img
+                className={
+                  location.pathname !== routes.baseRoute
+                    ? "header__button-icon"
+                    : "header__button-icon header__button-icon_promo"
+                }
+                src={headerButtonIcon}
+                alt="Account icon"
+              />
+            </Link>
+            <ul
+              className={
+                !isOpen
+                  ? "header__burger header__burger_active"
+                  : "header__burger"
+              }
+              onClick={onClick}
+            >
+              <li className="header__burger-line"></li>
+              <li className="header__burger-line"></li>
+              <li className="header__burger-line"></li>
+            </ul>
+            <div
+              className={
+                !isOpen ? "header__menu" : "header__menu header__menu_active"
+              }
+            >
+              <ul className="header__cross" onClick={close}>
+                <li className="header__cross-line"></li>
+                <li className="header__cross-line"></li>
+              </ul>
+            </div>
+          </div>
+        </>
+      </header>
+    );
+  return (
     <header className="header-centering header-centering_promo">
       <div className="header header_promo">
         <Link to={routes.baseRoute}>

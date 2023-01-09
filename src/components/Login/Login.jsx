@@ -1,29 +1,38 @@
 import "./Login.css";
 import RegistrationForm from "../RegistrationForm/RegistrationForm.jsx";
 import { routes } from "../../utils/routes";
-import { useForm } from "../../hooks/useForm.js";
+import { useFormWithValidation } from "../../hooks/useFormWithValidation.js";
 
 function Login(props) {
-  const { emailRegex, onAthorizationSubmit } = props;
-  const { values, handleChange, setValues } = useForm({});
+  const { onLoginSubmit, emailRegex, serverError } = props;
+  const { values, handleInputChange, errors, isValid } = useFormWithValidation(
+    {}
+  );
   function handleSubmit(event) {
     event.preventDefault();
-    onAthorizationSubmit(values);
+    onLoginSubmit(values);
   }
+
   return (
     <RegistrationForm
       title={"Рады видеть!"}
       name={"login-form"}
       buttonText={"Войти"}
       onSubmit={handleSubmit}
+      isValid={isValid}
       redirect={"login"}
       linkAdress={routes.signUp}
+      serverError={serverError}
     >
       <label className="form__input-label" htmlFor="email-login-input">
         E-mail
       </label>
       <input
-        className="form__input form__input_email"
+        className={
+          !errors["email"]
+            ? "form__input form__input_email"
+            : "form__input form__input_error form__input_email"
+        }
         id="email-login-input"
         type="email"
         name="email"
@@ -31,15 +40,28 @@ function Login(props) {
         required
         minLength="6"
         maxLength="64"
-        mask={emailRegex}
-        onChange={handleChange}
+        value={values.email || ""}
+        pattern={emailRegex}
+        onChange={handleInputChange}
       />
-      <span className="form__input-error email-input-error"></span>
+      <span
+        className={
+          isValid
+            ? "form__input-error"
+            : "form__input-error form__input-error_active"
+        }
+      >
+        {errors["email"]}
+      </span>
       <label className="form__input-label" htmlFor="password-login-input">
         Пароль
       </label>
       <input
-        className="form__input form__input_password"
+        className={
+          !errors["password"]
+            ? "form__input form__input_password-login"
+            : "form__input form__input_error form__input_password-login"
+        }
         id="password-login-input"
         type="password"
         name="password"
@@ -47,11 +69,18 @@ function Login(props) {
         required
         minLength="6"
         maxLength="32"
+        value={values.password || ""}
         autoComplete="off"
-        onChange={handleChange}
+        onChange={handleInputChange}
       />
-      <span className="form__input-error form__input-error_active  login-password-input-error">
-        Ошибка валидации
+      <span
+        className={
+          isValid
+            ? "form__input-error"
+            : "form__input-error form__input-error_active"
+        }
+      >
+        {errors["password"]}
       </span>
     </RegistrationForm>
   );

@@ -1,17 +1,28 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import "./RegistrationForm.css";
 import formLogo from "../../images/header__logo.svg";
 import { routes } from "../../utils/routes.js";
 
 function RegistrationForm(props) {
-  const { title, name, buttonText, redirect, linkAdress, onSubmit, children } =
-    props;
+  const {
+    title,
+    name,
+    buttonText,
+    redirect,
+    linkAdress,
+    onSubmit,
+    isValid,
+    children,
+    serverError,
+  } = props;
 
   const redirectText =
     redirect === "register"
       ? "Уже зарегистрированы?"
       : "Ещё не зарегистрированы?";
   const redirectLink = redirect === "register" ? "Войти" : "Регистрация";
+
   return (
     <main className="authorization">
       <div className="form-container">
@@ -29,9 +40,15 @@ function RegistrationForm(props) {
         >
           <fieldset className="form__fieldset">
             {children}
+            <span className="form__server-error">{serverError}</span>
             <button
-              className={`form__button form__button_${name}`}
+              className={
+                isValid
+                  ? `form__button form__button_${name}`
+                  : `form__button form__button_disabled form__button_${name}`
+              }
               type="submit"
+              disabled={!isValid}
             >
               {buttonText}
             </button>

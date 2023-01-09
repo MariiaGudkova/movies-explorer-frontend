@@ -1,11 +1,14 @@
 import "./Register.css";
 import RegistrationForm from "../RegistrationForm/RegistrationForm.jsx";
 import { routes } from "../../utils/routes";
-import { useForm } from "../../hooks/useForm.js";
+import { useFormWithValidation } from "../../hooks/useFormWithValidation.js";
 
 function Register(props) {
-  const { onRegistrationSubmit } = props;
-  const { values, handleChange, setValues } = useForm({});
+  const { onRegistrationSubmit, nameRegex, emailRegex, serverError } = props;
+  const { values, handleInputChange, errors, isValid } = useFormWithValidation(
+    {}
+  );
+
   function handleSubmit(event) {
     event.preventDefault();
     onRegistrationSubmit(values);
@@ -16,14 +19,20 @@ function Register(props) {
       name={"register-form"}
       buttonText={"Зарегистрироваться"}
       onSubmit={handleSubmit}
+      isValid={isValid}
       redirect={"register"}
       linkAdress={routes.signIn}
+      serverError={serverError}
     >
       <label className="form__input-label" htmlFor="name-register-input">
         Имя
       </label>
       <input
-        className="form__input form__input_name"
+        className={
+          !errors["name"]
+            ? "form__input form__input_name"
+            : "form__input form__input_error form__input_name"
+        }
         id="name-register-input"
         type="text"
         name="name"
@@ -31,14 +40,28 @@ function Register(props) {
         required
         minLength="2"
         maxLength="30"
-        onChange={handleChange}
+        value={values.name || ""}
+        pattern={nameRegex}
+        onChange={handleInputChange}
       />
-      <span className="form__input-error name-input-error"></span>
+      <span
+        className={
+          isValid
+            ? "form__input-error"
+            : "form__input-error form__input-error_active"
+        }
+      >
+        {errors["name"]}
+      </span>
       <label className="form__input-label" htmlFor="email-register-input">
         E-mail
       </label>
       <input
-        className="form__input form__input_email"
+        className={
+          !errors["email"]
+            ? "form__input form__input_email"
+            : "form__input form__input_error form__input_email"
+        }
         id="email-register-input"
         type="email"
         name="email"
@@ -46,14 +69,28 @@ function Register(props) {
         required
         minLength="6"
         maxLength="64"
-        onChange={handleChange}
+        value={values.email || ""}
+        pattern={emailRegex}
+        onChange={handleInputChange}
       />
-      <span className="form__input-error email-input-error"></span>
+      <span
+        className={
+          isValid
+            ? "form__input-error"
+            : "form__input-error form__input-error_active"
+        }
+      >
+        {errors["email"]}
+      </span>
       <label className="form__input-label" htmlFor="password-register-input">
         Пароль
       </label>
       <input
-        className="form__input form__input_password"
+        className={
+          !errors["password"]
+            ? "form__input form__input_password"
+            : "form__input form__input_error form__input_password"
+        }
         id="password-register-input"
         type="password"
         name="password"
@@ -62,10 +99,17 @@ function Register(props) {
         minLength="6"
         maxLength="32"
         autoComplete="off"
-        onChange={handleChange}
+        value={values.password || ""}
+        onChange={handleInputChange}
       />
-      <span className="form__input-error form__input-error_active  password-input-error ">
-        Ошибка валидации
+      <span
+        className={
+          isValid
+            ? "form__input-error"
+            : "form__input-error form__input-error_active"
+        }
+      >
+        {errors["password"]}
       </span>
     </RegistrationForm>
   );

@@ -6,18 +6,20 @@
 
 .movies__list {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 360px));
   column-gap: 28px;
   row-gap: 31.5px;
   padding: 0;
   margin: 0;
   margin-bottom: 60px;
   list-style: none;
+  justify-content: center;
 }
 
 .movies__button {
   height: 36px;
   width: 100%;
+  max-width: 1280px;
   border: transparent;
   background: #f9f9f9;
   border-radius: 6px;
@@ -41,6 +43,7 @@
 @media screen and (min-width: 1285px) {
   .movies {
     align-items: center;
+    margin: 0 0 97px 0;
   }
 
   .movies__list {
@@ -49,12 +52,13 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 885px) {
   .movies {
     margin: 0 30px 100px 30px;
   }
 
   .movies__list {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 342px));
     column-gap: 24px;
     row-gap: 35px;
     margin-bottom: 80px;
