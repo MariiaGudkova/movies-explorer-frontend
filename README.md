@@ -19,7 +19,7 @@
 
 - IP: 158.160.35.0
 - Домен фронтенда: https://movies-gudkova.nomoredomains.club
-- Репозиторий бекэнда: https://github.com/MariiaGudkova/movies-explorer-api
+- Репозиторий бэкенда: https://github.com/MariiaGudkova/movies-explorer-api
 
 ## Видео
 
